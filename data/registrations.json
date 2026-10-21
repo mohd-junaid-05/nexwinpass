@@ -1,91 +1,110 @@
 [
   {
-    "email": "alice@example.com",
-    "name": "Alice Chen",
-    "team": "Quantum Leap",
-    "teamId": "QL-001",
-    "track": 0,
-    "role": "Team Leader",
-    "members": 3,
-    "idea": "AI-powered code review assistant"
-  },
-  {
-    "email": "bob@example.com",
-    "name": "Bob Martinez",
-    "team": "Quantum Leap",
-    "teamId": "QL-001",
-    "track": 0,
-    "role": "Member",
-    "members": 3
-  },
-  {
-    "email": "carol@example.com",
-    "name": "Carol Johansson-Aleksandrović-Worthington",
-    "team": "DeFi Wizards",
-    "teamId": "DW-042",
-    "track": 1,
-    "role": "Team Leader",
-    "members": 2,
-    "idea": "Decentralised micro-lending for underbanked communities worldwide",
-    "number": 42
-  },
-  {
-    "email": "dave@example.com",
-    "name": "DAVID PARK",
-    "team": "Solo Builders",
-    "teamId": "SB-099",
-    "track": 4,
-    "role": "Team Leader",
-    "members": 1,
-    "idea": "Adaptive learning paths for neurodiverse students"
-  },
-  {
-    "email": "eve@example.com",
-    "name": "Eve Nakamura",
-    "team": "Green Circuit",
-    "teamId": "GC-017",
-    "track": 3,
-    "role": "Member",
-    "members": 3
-  },
-  {
-    "email": "frank@example.com",
-    "name": "Frank O'Sullivan",
-    "team": "MedTech Pioneers",
-    "teamId": "MP-008",
+    "email": "rayyanray5u2@gmail.com",
+    "name": "Abdul Raouf",
+    "team": "Decode",
+    "teamId": "DC-001",
     "track": 2,
     "role": "Team Leader",
-    "members": 2,
-    "idea": "Wearable vitals monitor with predictive alerts"
+    "members": 3
   },
   {
-    "email": "aarav@example.com",
-    "name": "आरव शर्मा",
-    "team": "Himalaya Tech",
-    "teamId": "HT-012",
-    "track": 0,
-    "role": "Team Leader",
-    "members": 3,
-    "idea": "कृत्रिम बुद्धिमत्ता आधारित भाषा अनुवादक"
-  },
-  {
-    "email": "ananya@example.com",
-    "name": "అనన్య రెడ్డి",
-    "team": "Telugu Innovators",
-    "teamId": "TI-024",
-    "track": 3,
+    "email": "yassertaha.ymt@gmail.com",
+    "name": "Yasser Mohd Taha",
+    "team": "Decode",
+    "teamId": "DC-001",
+    "track": 2,
     "role": "Member",
-    "members": 3,
-    "idea": "సుస్థిర వ్యవసాయం కోసం స్మార్ట్ సెన్సార్లు"
+    "members": 3
   },
   {
-    "email": "zaid@example.com",
-    "name": "زيد المنصور",
-    "team": "Desert Falcon",
-    "teamId": "DF-007",
+    "email": "shaikaslam2602@gmail.com",
+    "name": "Shaik Aslam",
+    "team": "Decode",
+    "teamId": "DC-001",
+    "track": 2,
+    "role": "Member",
+    "members": 3
+  },
+  {
+    "email": "mohammedayaana588@gmail.com",
+    "name": "Mohammed Ayaan Ahmed",
+    "team": "Innov8ers",
+    "teamId": "IN-002",
     "track": 1,
     "role": "Team Leader",
-    "members": 2,
-    "idea": "منصة تمويل جماعي لامركزية للمشاريع الإنسانية"
+    "members": 3
+  },
+  {
+    "email": "haroonakram2509@gmail.com",
+    "name": "Haroon Akram",
+    "team": "Innov8ers",
+    "teamId": "IN-002",
+    "track": 1,
+    "role": "Member",
+    "members": 3
+  },
+  {
+    "email": "najah.n0621@gmail.com",
+    "name": "Najah Imran",
+    "team": "Innov8ers",
+    "teamId": "IN-002",
+    "track": 1,
+    "role": "Member",
+    "members": 3
+  },
+  {
+    "email": "mohdmaqsood367@gmail.com",
+    "name": "Mohd Maqsood",
+    "team": "codeCrafters",
+    "teamId": "CC-003",
+    "track": 1,
+    "role": "Team Leader",
+    "members": 3
+  },
+  {
+    "email": "saniyaanwarrr@gmail.com",
+    "name": "Saniya Anwar",
+    "team": "codeCrafters",
+    "teamId": "CC-003",
+    "track": 1,
+    "role": "Member",
+    "members": 3
+  },
+  {
+    "email": "hubajabeen910@gmail.com",
+    "name": "Huba Jabeen",
+    "team": "codeCrafters",
+    "teamId": "CC-003",
+    "track": 1,
+    "role": "Member",
+    "members": 3
+  },
+  {
+    "email": "saadhyd1234@gmail.com",
+    "name": "Muhammad Saad",
+    "team": "Nexora",
+    "teamId": "NX-004",
+    "track": 2,
+    "role": "Team Leader",
+    "members": 3
+  },
+  {
+    "email": "nailaurooj05@gmail.com",
+    "name": "Naila Urooj",
+    "team": "Nexora",
+    "teamId": "NX-004",
+    "track": 2,
+    "role": "Member",
+    "members": 3
+  },
+  {
+    "email": "prachijadhav2817@gmail.com",
+    "name": "Jadhav Prachi",
+    "team": "Nexora",
+    "teamId": "NX-004",
+    "track": 2,
+    "role": "Member",
+    "members": 3
   }
 ]

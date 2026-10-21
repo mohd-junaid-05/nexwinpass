@@ -18,7 +18,7 @@ interface Registration {
 let registrations: Registration[] | null = null;
 
 async function loadRegistrations(): Promise<Registration[]> {
-  if (registrations) return registrations;
+  if (registrations && process.env.NODE_ENV === "production") return registrations;
   const filePath = path.join(process.cwd(), "data", "registrations.json");
   const raw = await fs.readFile(filePath, "utf-8");
   registrations = JSON.parse(raw) as Registration[];
