@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mascot Cast Review Sheet — Phase 06</title>
+  <style>
+    :root {
+      --bg: #0B0E17;
+      --card: #161B26;
+      --text: #F1F5F9;
+      --subtext: #94A3B8;
+      --border: #2B3445;
+    }
+    body {
+      margin: 0;
+      padding: 2rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+    h1 { margin: 0 0 0.5rem 0; font-size: 2rem; }
+    p { margin: 0.25rem 0; color: var(--subtext); }
+    .controls {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    button {
+      background: #2563EB;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { background: #1D4ED8; }
+    .section-title {
+      font-size: 1.4rem;
+      margin: 2.5rem 0 1rem 0;
+      color: #38BDF8;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .preview-box {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+    .bg-dark { background: #0B0E17; }
+    .bg-light { background: #FFFFFF; }
+    .img-wrap img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+    }
+    .greyscale img {
+      filter: grayscale(100%) drop-shadow(0 8px 16px rgba(0,0,0,0.4)) !important;
+    }
+    .name { font-weight: 700; font-size: 1.15rem; margin-bottom: 0.2rem; }
+    .tagline { color: #F59E0B; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .desc { font-size: 0.8rem; color: var(--subtext); text-align: center; }
+    .swatches { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    .swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Builder Pass Studio — 8 Mascot Cast Review Sheet</h1>
+    <p>Studio-quality 3D vinyl-toy robots derived from reference archetype. Clean transparent alpha, identical framing, distinct silhouettes.</p>
+    <div class="controls">
+      <button onclick="toggleBackground()">Toggle Dark / Light Background</button>
+      <button onclick="toggleGreyscale()">Toggle Greyscale Silhouette Test</button>
+    </div>
+  </header>
+
+  <h2 class="section-title">1. Full-Body Framing (Large Renders — 1024×1024)</h2>
+  <div class="grid" id="fullGrid">
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="nova-full-large.png" alt="Nova Full">
+        </div>
+        <div class="name">Nova</div>
+        <div class="tagline">The Launch Pilot</div>
+        <div class="desc">Warm orange vinyl robot with a rocket backpack, star fin antenna, and round glowing cyan eyes.</div>
+        <div class="swatches">
+          <div class="swatch" style="background:#FF6B35" title="Body: #FF6B35"></div>
+          <div class="swatch" style="background:#FBBF24" title="Accent: #FBBF24"></div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="byte-full-large.png" alt="Byte Full">
+        </div>
+        <div class="name">Byte</div>
+        <div class="tagline">The Bug Hunter</div>
+        <div class="desc">Lime green vinyl robot with oversized padded headphones, pixel-grid visor, and square matrix eyes.</div>
+        <div class="swatches">
+          <div class="swatch" style="background:#84CC16" title="Body: #84CC16"></div>
+          <div class="swatch" style="background:#10B981" title="Accent: #10B981"></div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="oracle-full-large.png" alt="Oracle Full">
+        </div>
+        <div class="name">Oracle</div>
+        <div class="tagline">The Pattern Seer</div>
+        <div class="desc">Deep violet vinyl robot wearing a hooded celestial cloak with a floating halo ring and calm half-closed eyes.</div>
+        <div class="swatches">
+          <div class="swatch" style="background:#6D28D9" title="Body: #6D28D9"></div>
+          <div class="swatch" style="background:#C084FC" title="Accent: #C084FC"></div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="forge-full-large.png" alt="Forge Full">
+        </div>
+        <div class="name">Forge</div>
+        <div class="tagline">The Code Smith</div>
+        <div class="desc">Dark slate vinyl robot with amber gold trim, welding goggles pushed up, smith apron, and focused flame slit eyes.</div>
+        <div class="swatches">
+          <div class="swatch" style="background:#222630" title="Body: #222630"></div>
+          <div class="swatch" style="background:#F59E0B" title="Accent: #F59E0B"></div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="pixel-full-large.png" alt="Pixel Full">
+        </div>
+        <div class="name">Pixel</div>
+        <div class="tagline">The Interface Artist</div>
+        <div class="desc">Teal vinyl robot wearing an artist beret, paint splash shoulder detail, and rounded-square eyes.</div>
+        <div class="swatches">
+          <div class="swatch" style="background:#0D9488" title="Body: #0D9488"></div>
+          <div class="swatch" style="background:#F43F5E" title="Accent: #F43F5E"></div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="helix-full-large.png" alt="Helix Full">
+        </div>
+        <div class="name">Helix</div>
+        <div class="tagline">The Model Whisperer</div>
+        <div class="desc">Magenta vinyl robot in a crisp white lab coat with safety goggles on its forehead and a twisted double-helix ear ribbon.</div>
+        <div class="swatches">
+          <div class="swatch" style="background:#C026D3" title="Body: #C026D3"></div>
+          <div class="swatch" style="background:#10B981" title="Accent: #10B981"></div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="atlas-full-large.png" alt="Atlas Full">
+        </div>
+        <div class="name">Atlas</div>
+        <div class="tagline">The Systems Navigator</div>
+        <div class="desc">Blue vinyl robot wearing an explorer utility vest, round glasses over its visor, and compass ear badge.</div>
+        <div class="swatches">
+          <div class="swatch" style="background:#2563EB" title="Body: #2563EB"></div>
+          <div class="swatch" style="background:#F59E0B" title="Accent: #F59E0B"></div>
+        </div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="glitch-full-large.png" alt="Glitch Full">
+        </div>
+        <div class="name">Glitch</div>
+        <div class="tagline">The Chaos Tester</div>
+        <div class="desc">Emerald vinyl robot with chromatic color-split offset panels, torn-edge visor, and digital bar eyes.</div>
+        <div class="swatches">
+          <div class="swatch" style="background:#059669" title="Body: #059669"></div>
+          <div class="swatch" style="background:#F43F5E" title="Accent: #F43F5E"></div>
+        </div>
+      </div>
+    
+  </div>
+
+  <h2 class="section-title">2. Bust Framing (Tile / Avatar / Badge — 256×256)</h2>
+  <div class="grid" id="bustGrid">
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="nova-bust-small.png" alt="Nova Bust" style="width: 140px; height: 140px;">
+        </div>
+        <div class="name">Nova</div>
+        <div class="tagline">The Launch Pilot</div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="byte-bust-small.png" alt="Byte Bust" style="width: 140px; height: 140px;">
+        </div>
+        <div class="name">Byte</div>
+        <div class="tagline">The Bug Hunter</div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="oracle-bust-small.png" alt="Oracle Bust" style="width: 140px; height: 140px;">
+        </div>
+        <div class="name">Oracle</div>
+        <div class="tagline">The Pattern Seer</div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="forge-bust-small.png" alt="Forge Bust" style="width: 140px; height: 140px;">
+        </div>
+        <div class="name">Forge</div>
+        <div class="tagline">The Code Smith</div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="pixel-bust-small.png" alt="Pixel Bust" style="width: 140px; height: 140px;">
+        </div>
+        <div class="name">Pixel</div>
+        <div class="tagline">The Interface Artist</div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="helix-bust-small.png" alt="Helix Bust" style="width: 140px; height: 140px;">
+        </div>
+        <div class="name">Helix</div>
+        <div class="tagline">The Model Whisperer</div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="atlas-bust-small.png" alt="Atlas Bust" style="width: 140px; height: 140px;">
+        </div>
+        <div class="name">Atlas</div>
+        <div class="tagline">The Systems Navigator</div>
+      </div>
+    
+      <div class="card">
+        <div class="preview-box bg-dark img-wrap">
+          <img src="glitch-bust-small.png" alt="Glitch Bust" style="width: 140px; height: 140px;">
+        </div>
+        <div class="name">Glitch</div>
+        <div class="tagline">The Chaos Tester</div>
+      </div>
+    
+  </div>
+
+  <script>
+    let isLight = false;
+    let isGrey = false;
+    function toggleBackground() {
+      isLight = !isLight;
+      document.querySelectorAll('.preview-box').forEach(el => {
+        el.classList.toggle('bg-light', isLight);
+        el.classList.toggle('bg-dark', !isLight);
+      });
+    }
+    function toggleGreyscale() {
+      isGrey = !isGrey;
+      document.body.classList.toggle('greyscale', isGrey);
+    }
+  </script>
+</body>
+</html>

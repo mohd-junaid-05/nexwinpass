@@ -1,0 +1,160 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-10-21T02:57:39.223Z",
+  "family": "NexWin Vinyl-Toy Robots",
+  "count": 8,
+  "mascots": [
+    {
+      "id": "nova",
+      "name": "Nova",
+      "tagline": "The Launch Pilot",
+      "bodyColor": "#FF6B35",
+      "accentColor": "#FBBF24",
+      "eyeGlowColor": "#22D3EE",
+      "gradient": [
+        "#7C2D12",
+        "#EA580C"
+      ],
+      "description": "Warm orange vinyl robot with a rocket backpack, star fin antenna, and round glowing cyan eyes.",
+      "images": {
+        "fullLarge": "/mascots/nova-full-large.png",
+        "fullSmall": "/mascots/nova-full-small.png",
+        "bustLarge": "/mascots/nova-bust-large.png",
+        "bustSmall": "/mascots/nova-bust-small.png"
+      }
+    },
+    {
+      "id": "byte",
+      "name": "Byte",
+      "tagline": "The Bug Hunter",
+      "bodyColor": "#84CC16",
+      "accentColor": "#10B981",
+      "eyeGlowColor": "#4ADE80",
+      "gradient": [
+        "#14532D",
+        "#15803D"
+      ],
+      "description": "Lime green vinyl robot with oversized padded headphones, pixel-grid visor, and square matrix eyes.",
+      "images": {
+        "fullLarge": "/mascots/byte-full-large.png",
+        "fullSmall": "/mascots/byte-full-small.png",
+        "bustLarge": "/mascots/byte-bust-large.png",
+        "bustSmall": "/mascots/byte-bust-small.png"
+      }
+    },
+    {
+      "id": "oracle",
+      "name": "Oracle",
+      "tagline": "The Pattern Seer",
+      "bodyColor": "#6D28D9",
+      "accentColor": "#C084FC",
+      "eyeGlowColor": "#F472B6",
+      "gradient": [
+        "#3B0764",
+        "#701A75"
+      ],
+      "description": "Deep violet vinyl robot wearing a hooded celestial cloak with a floating halo ring and calm half-closed eyes.",
+      "images": {
+        "fullLarge": "/mascots/oracle-full-large.png",
+        "fullSmall": "/mascots/oracle-full-small.png",
+        "bustLarge": "/mascots/oracle-bust-large.png",
+        "bustSmall": "/mascots/oracle-bust-small.png"
+      }
+    },
+    {
+      "id": "forge",
+      "name": "Forge",
+      "tagline": "The Code Smith",
+      "bodyColor": "#222630",
+      "accentColor": "#F59E0B",
+      "eyeGlowColor": "#FBBF24",
+      "gradient": [
+        "#18181B",
+        "#B45309"
+      ],
+      "description": "Dark slate vinyl robot with amber gold trim, welding goggles pushed up, smith apron, and focused flame slit eyes.",
+      "images": {
+        "fullLarge": "/mascots/forge-full-large.png",
+        "fullSmall": "/mascots/forge-full-small.png",
+        "bustLarge": "/mascots/forge-bust-large.png",
+        "bustSmall": "/mascots/forge-bust-small.png"
+      }
+    },
+    {
+      "id": "pixel",
+      "name": "Pixel",
+      "tagline": "The Interface Artist",
+      "bodyColor": "#0D9488",
+      "accentColor": "#F43F5E",
+      "eyeGlowColor": "#38BDF8",
+      "gradient": [
+        "#0F172A",
+        "#0E7490"
+      ],
+      "description": "Teal vinyl robot wearing an artist beret, paint splash shoulder detail, and rounded-square eyes.",
+      "images": {
+        "fullLarge": "/mascots/pixel-full-large.png",
+        "fullSmall": "/mascots/pixel-full-small.png",
+        "bustLarge": "/mascots/pixel-bust-large.png",
+        "bustSmall": "/mascots/pixel-bust-small.png"
+      }
+    },
+    {
+      "id": "helix",
+      "name": "Helix",
+      "tagline": "The Model Whisperer",
+      "bodyColor": "#C026D3",
+      "accentColor": "#10B981",
+      "eyeGlowColor": "#67E8F9",
+      "gradient": [
+        "#4A044E",
+        "#86198F"
+      ],
+      "description": "Magenta vinyl robot in a crisp white lab coat with safety goggles on its forehead and a twisted double-helix ear ribbon.",
+      "images": {
+        "fullLarge": "/mascots/helix-full-large.png",
+        "fullSmall": "/mascots/helix-full-small.png",
+        "bustLarge": "/mascots/helix-bust-large.png",
+        "bustSmall": "/mascots/helix-bust-small.png"
+      }
+    },
+    {
+      "id": "atlas",
+      "name": "Atlas",
+      "tagline": "The Systems Navigator",
+      "bodyColor": "#2563EB",
+      "accentColor": "#F59E0B",
+      "eyeGlowColor": "#FCD34D",
+      "gradient": [
+        "#1E1B4B",
+        "#1D4ED8"
+      ],
+      "description": "Blue vinyl robot wearing an explorer utility vest, round glasses over its visor, and compass ear badge.",
+      "images": {
+        "fullLarge": "/mascots/atlas-full-large.png",
+        "fullSmall": "/mascots/atlas-full-small.png",
+        "bustLarge": "/mascots/atlas-bust-large.png",
+        "bustSmall": "/mascots/atlas-bust-small.png"
+      }
+    },
+    {
+      "id": "glitch",
+      "name": "Glitch",
+      "tagline": "The Chaos Tester",
+      "bodyColor": "#059669",
+      "accentColor": "#F43F5E",
+      "eyeGlowColor": "#06B6D4",
+      "gradient": [
+        "#022C22",
+        "#0F766E"
+      ],
+      "description": "Emerald vinyl robot with chromatic color-split offset panels, torn-edge visor, and digital bar eyes.",
+      "images": {
+        "fullLarge": "/mascots/glitch-full-large.png",
+        "fullSmall": "/mascots/glitch-full-small.png",
+        "bustLarge": "/mascots/glitch-bust-large.png",
+        "bustSmall": "/mascots/glitch-bust-small.png"
+      }
+    }
+  ]
+}

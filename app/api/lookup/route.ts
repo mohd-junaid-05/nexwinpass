@@ -1,0 +1,73 @@
+import { NextRequest, NextResponse } from "next/server";
+import { promises as fs } from "fs";
+import path from "path";
+import { lookupLimiter } from "@/lib/rateLimit";
+
+interface Registration {
+  email: string;
+  name: string;
+  team: string;
+  teamId: string;
+  track: number;
+  role: string;
+  members: number;
+  idea?: string;
+}
+
+let registrations: Registration[] | null = null;
+
+async function loadRegistrations(): Promise<Registration[]> {
+  if (registrations) return registrations;
+  const filePath = path.join(process.cwd(), "data", "registrations.json");
+  const raw = await fs.readFile(filePath, "utf-8");
+  registrations = JSON.parse(raw) as Registration[];
+  return registrations;
+}
+
+export async function POST(request: NextRequest) {
+  // Rate limit by IP
+  const forwarded = request.headers.get("x-forwarded-for");
+  const ip = forwarded?.split(",")[0]?.trim() ?? "unknown";
+
+  if (!lookupLimiter.check(ip)) {
+    return NextResponse.json(
+      { error: "Too many tries. Wait a minute." },
+      { status: 429 },
+    );
+  }
+
+  let body: { email?: string };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ found: false }, { status: 200 });
+  }
+
+  const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+
+  if (!email) {
+    return NextResponse.json({ found: false }, { status: 200 });
+  }
+
+  const list = await loadRegistrations();
+  const match = list.find(
+    (r) => r.email.trim().toLowerCase() === email,
+  );
+
+  if (!match) {
+    // Same status code as a hit — indistinguishable by timing or code
+    return NextResponse.json({ found: false }, { status: 200 });
+  }
+
+  // Never return the email
+  return NextResponse.json({
+    found: true,
+    name: match.name,
+    team: match.team,
+    teamId: match.teamId,
+    track: match.track,
+    role: match.role,
+    members: match.members,
+    idea: match.idea ?? "",
+  });
+}

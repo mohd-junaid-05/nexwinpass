@@ -1,0 +1,294 @@
+{
+  "version": "1.0.0",
+  "defaultMascotId": "forge",
+  "mascots": [
+    {
+      "id": "nova",
+      "name": "Nova",
+      "tagline": "The Launch Pilot",
+      "description": "Warm orange robot in a cream puffer vest with a gold star pin, white sneakers, star-shaped fin, and glowing cyan eyes.",
+      "images": {
+        "fullLarge": "/mascots/nova-full-large.png",
+        "fullSmall": "/mascots/nova-full-small.png",
+        "bustLarge": "/mascots/nova-bust-large.png",
+        "bustSmall": "/mascots/nova-bust-small.png"
+      },
+      "anchors": {
+        "headCenter": [
+          1082,
+          530
+        ],
+        "headWidth": 1497,
+        "baseline": 1974
+      },
+      "theme": {
+        "shell": "#EA580C",
+        "deeper": "#9A3412",
+        "tint": "#FFEDD5",
+        "glow": "#38BDF8",
+        "accent": "#FEF3C7",
+        "gradient": [
+          "#C2410C",
+          "#7C2D12"
+        ],
+        "popBg": "#0F172A",
+        "collectorPanel": [
+          "#1E1B4B",
+          "#312E81"
+        ]
+      }
+    },
+    {
+      "id": "byte",
+      "name": "Byte",
+      "tagline": "The Bug Hunter",
+      "description": "Lime-green robot with pixel-style square eyes, black headphones around the neck, short antenna, and black-and-lime high-tops.",
+      "images": {
+        "fullLarge": "/mascots/byte-full-large.png",
+        "fullSmall": "/mascots/byte-full-small.png",
+        "bustLarge": "/mascots/byte-bust-large.png",
+        "bustSmall": "/mascots/byte-bust-small.png"
+      },
+      "anchors": {
+        "headCenter": [
+          1046,
+          620
+        ],
+        "headWidth": 1445,
+        "baseline": 2008
+      },
+      "theme": {
+        "shell": "#65A30D",
+        "deeper": "#3F6212",
+        "tint": "#ECFCCB",
+        "glow": "#4ADE80",
+        "accent": "#18181B",
+        "gradient": [
+          "#3F6212",
+          "#14532D"
+        ],
+        "popBg": "#1E1B4B",
+        "collectorPanel": [
+          "#0F172A",
+          "#1E293B"
+        ]
+      }
+    },
+    {
+      "id": "oracle",
+      "name": "Oracle",
+      "tagline": "The Pattern Seer",
+      "description": "Deep violet robot with calm half-closed lavender eyes, floating gold halo, crescent-moon fin, star-patterned indigo hoodie, and crystal pendant.",
+      "images": {
+        "fullLarge": "/mascots/oracle-full-large.png",
+        "fullSmall": "/mascots/oracle-full-small.png",
+        "bustLarge": "/mascots/oracle-bust-large.png",
+        "bustSmall": "/mascots/oracle-bust-small.png"
+      },
+      "anchors": {
+        "headCenter": [
+          1081,
+          640
+        ],
+        "headWidth": 1203,
+        "baseline": 1858
+      },
+      "theme": {
+        "shell": "#7C3AED",
+        "deeper": "#4C1D95",
+        "tint": "#EDE9FE",
+        "glow": "#FDE047",
+        "accent": "#FACC15",
+        "gradient": [
+          "#4C1D95",
+          "#2E1065"
+        ],
+        "popBg": "#F59E0B",
+        "collectorPanel": [
+          "#1E1B4B",
+          "#3B0764"
+        ]
+      }
+    },
+    {
+      "id": "forge",
+      "name": "Forge",
+      "tagline": "The Code Smith",
+      "description": "Amber-gold robot wearing a backwards navy cap, gold chain, utility tool belt with hammer, and tan work boots.",
+      "images": {
+        "fullLarge": "/mascots/forge-full-large.png",
+        "fullSmall": "/mascots/forge-full-small.png",
+        "bustLarge": "/mascots/forge-bust-large.png",
+        "bustSmall": "/mascots/forge-bust-small.png"
+      },
+      "anchors": {
+        "headCenter": [
+          1102,
+          670
+        ],
+        "headWidth": 1317,
+        "baseline": 1982
+      },
+      "theme": {
+        "shell": "#D97706",
+        "deeper": "#78350F",
+        "tint": "#FEF3C7",
+        "glow": "#F59E0B",
+        "accent": "#1E293B",
+        "gradient": [
+          "#92400E",
+          "#451A03"
+        ],
+        "popBg": "#0284C7",
+        "collectorPanel": [
+          "#1C1917",
+          "#292524"
+        ]
+      }
+    },
+    {
+      "id": "pixel",
+      "name": "Pixel",
+      "tagline": "The Interface Artist",
+      "description": "Teal robot with soft square mint eyes, lilac beret, paintbrush fin, paint-splashed tote bag, and sticker-covered arm.",
+      "images": {
+        "fullLarge": "/mascots/pixel-full-large.png",
+        "fullSmall": "/mascots/pixel-full-small.png",
+        "bustLarge": "/mascots/pixel-bust-large.png",
+        "bustSmall": "/mascots/pixel-bust-small.png"
+      },
+      "anchors": {
+        "headCenter": [
+          1060,
+          450
+        ],
+        "headWidth": 1474,
+        "baseline": 1947
+      },
+      "theme": {
+        "shell": "#0D9488",
+        "deeper": "#115E59",
+        "tint": "#CCFBF1",
+        "glow": "#2DD4BF",
+        "accent": "#C084FC",
+        "gradient": [
+          "#0F766E",
+          "#134E4A"
+        ],
+        "popBg": "#FFDE00",
+        "collectorPanel": [
+          "#0F172A",
+          "#134E4A"
+        ]
+      }
+    },
+    {
+      "id": "helix",
+      "name": "Helix",
+      "tagline": "The Model Whisperer",
+      "description": "Hot-pink robot with ringed round eyes, dark sunglasses on the head, butterfly clips, twisted helix fin, and striped arm warmers.",
+      "images": {
+        "fullLarge": "/mascots/helix-full-large.png",
+        "fullSmall": "/mascots/helix-full-small.png",
+        "bustLarge": "/mascots/helix-bust-large.png",
+        "bustSmall": "/mascots/helix-bust-small.png"
+      },
+      "anchors": {
+        "headCenter": [
+          1071,
+          410
+        ],
+        "headWidth": 1332,
+        "baseline": 1955
+      },
+      "theme": {
+        "shell": "#DB2777",
+        "deeper": "#831843",
+        "tint": "#FCE7F3",
+        "glow": "#F472B6",
+        "accent": "#06B6D4",
+        "gradient": [
+          "#9D174D",
+          "#500724"
+        ],
+        "popBg": "#047857",
+        "collectorPanel": [
+          "#1E1B4B",
+          "#4A044E"
+        ]
+      }
+    },
+    {
+      "id": "atlas",
+      "name": "Atlas",
+      "tagline": "The Systems Navigator",
+      "description": "Cobalt-blue robot with smiling-arc eyes, thin antenna, navy varsity jacket with pins, striped crimson tie, and backpack.",
+      "images": {
+        "fullLarge": "/mascots/atlas-full-large.png",
+        "fullSmall": "/mascots/atlas-full-small.png",
+        "bustLarge": "/mascots/atlas-bust-large.png",
+        "bustSmall": "/mascots/atlas-bust-small.png"
+      },
+      "anchors": {
+        "headCenter": [
+          1042,
+          640
+        ],
+        "headWidth": 1441,
+        "baseline": 1946
+      },
+      "theme": {
+        "shell": "#2563EB",
+        "deeper": "#1E3A8A",
+        "tint": "#DBEAFE",
+        "glow": "#60A5FA",
+        "accent": "#DC2626",
+        "gradient": [
+          "#1D4ED8",
+          "#172554"
+        ],
+        "popBg": "#FBBF24",
+        "collectorPanel": [
+          "#0B0F19",
+          "#1E293B"
+        ]
+      }
+    },
+    {
+      "id": "glitch",
+      "name": "Glitch",
+      "tagline": "The Chaos Tester",
+      "description": "Emerald-green robot with horizontal bar eyes, intentional cyan/magenta glitch fringe edges, cracked visor corner, lightning-bolt fin, and black harness vest.",
+      "images": {
+        "fullLarge": "/mascots/glitch-full-large.png",
+        "fullSmall": "/mascots/glitch-full-small.png",
+        "bustLarge": "/mascots/glitch-bust-large.png",
+        "bustSmall": "/mascots/glitch-bust-small.png"
+      },
+      "anchors": {
+        "headCenter": [
+          1083,
+          490
+        ],
+        "headWidth": 1504,
+        "baseline": 1967
+      },
+      "theme": {
+        "shell": "#059669",
+        "deeper": "#064E3B",
+        "tint": "#D1FAE5",
+        "glow": "#22D3EE",
+        "accent": "#F43F5E",
+        "gradient": [
+          "#047857",
+          "#022C22"
+        ],
+        "popBg": "#881337",
+        "collectorPanel": [
+          "#09090B",
+          "#18181B"
+        ]
+      }
+    }
+  ]
+}
