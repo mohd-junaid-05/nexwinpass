@@ -10,6 +10,7 @@ import {
 } from "../utils";
 import { drawMascot } from "../mascotPlaceholder";
 import { drawContactShadow, applySeededGrain, drawCardEdgeHighlight } from "../grain";
+import { drawNexWinLogo } from "../logo";
 
 /**
  * Draws a multi-pointed comic starburst badge.
@@ -66,8 +67,8 @@ export function renderPopStyle(
   height: number = 1080
 ): void {
   const mascot = getMascotConfig(participant.mascotId);
-  const trackIndex = Math.max(0, Math.min(5, participant.track || 0));
-  const trackName = TRACKS[trackIndex] || "Open Innovation";
+  const trackIndex = Math.max(0, Math.min(TRACKS.length - 1, participant.track || 0));
+  const trackName = TRACKS[trackIndex] || TRACKS[0];
 
   const scale = width / 1920;
 
@@ -205,15 +206,23 @@ export function renderPopStyle(
 
   // Event Header
   const headerY = Math.round(110 * scale);
+  const markSize = Math.round(52 * scale);
+  drawNexWinLogo(ctx, infoX, headerY, markSize, {
+    variant: "simple",
+    isDarkBackground: false,
+    color: "#000000",
+  });
+
+  const headerTextX = infoX + markSize + Math.round(14 * scale);
   ctx.fillStyle = "#000000";
-  ctx.font = `900 ${Math.round(32 * scale)}px ${FONTS.condensedPop}`;
+  ctx.font = `900 ${Math.round(30 * scale)}px ${FONTS.condensedPop}`;
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
-  ctx.fillText(`✱ ${EVENT.badgeText}`, infoX, headerY);
+  ctx.fillText(EVENT.name, headerTextX, headerY);
 
   ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-  ctx.font = `700 ${Math.round(22 * scale)}px ${FONTS.sansFacts}`;
-  ctx.fillText(`${EVENT.name} • by NexWin`, infoX, headerY + Math.round(40 * scale));
+  ctx.font = `700 ${Math.round(18 * scale)}px ${FONTS.sansFacts}`;
+  ctx.fillText(`by ${EVENT.organizer}`, headerTextX, headerY + Math.round(34 * scale));
 
   // Hero Participant Name (Anton, all-caps, massive condensed poster type)
   const nameStartY = Math.round(230 * scale);
@@ -262,7 +271,7 @@ export function renderPopStyle(
   ctx.textBaseline = "top";
   ctx.fillText("BUILDING", -stickerW / 2 + Math.round(36 * scale), -stickerH / 2 + Math.round(26 * scale));
 
-  const ideaText = participant.ideaTitle || "Building the Future with NexWin";
+  const ideaText = participant.ideaTitle || "Building the Future at NEXWIN";
   const ideaFontSize = Math.round(34 * scale);
   const ideaFont = `800 ${ideaFontSize}px ${FONTS.sansFacts}`;
   const ideaLines = wrapAndFitText(ctx, ideaText, stickerW - Math.round(72 * scale), 2, ideaFont);
@@ -281,12 +290,16 @@ export function renderPopStyle(
   // 4. Bottom Footer
   const footerY = Math.round(965 * scale);
 
-  // Left: Event Site Link
+  // Left: Event Site Link or Pass Date Line
   ctx.fillStyle = "#000000";
   ctx.font = `900 ${Math.round(26 * scale)}px ${FONTS.condensedPop}`;
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
-  ctx.fillText(`${EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗`, infoX, footerY);
+  if (EVENT.siteUrl) {
+    ctx.fillText(`${EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗`, infoX, footerY);
+  } else {
+    ctx.fillText(EVENT.passDateLine, infoX, footerY);
+  }
 
   // Right: Track and Team (dynamically sized and formatted, never overlaps)
   const trackTeamText = formatTrackAndTeam(trackName, trackIndex, participant.team);

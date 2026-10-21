@@ -23,7 +23,7 @@ export function renderAvatarPass(
   const width = 1080;
   const height = 1080;
   const mascot = getMascotConfig(participant.mascotId);
-  const trackIndex = Math.max(0, Math.min(5, participant.track || 0));
+  const trackIndex = Math.max(0, Math.min(TRACK_DETAILS.length - 1, participant.track || 0));
   const trackInfo = TRACK_DETAILS[trackIndex] || TRACK_DETAILS[0];
 
   ctx.save();

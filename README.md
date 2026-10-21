@@ -27,14 +27,15 @@ All event-specific text, URLs, dates, tracks, mascots, and pass sizes are centra
 To rebrand or configure the studio for your hackathon:
 1. Open `lib/config.ts`.
 2. Update the `EVENT` object:
-   - `name`: Full event title (e.g., `"NexWin Hackathon 2026"`)
-   - `badgeText`: Short pill badge text (e.g., `"NEXWIN/HACK 26"`)
-   - `siteUrl`: Official hackathon website URL
-   - `dates`: Event timeline & format (e.g., `"1–7 Nov 2026 · Online"`)
-   - `hashtags`: List of hashtags for social sharing
-   - `organiser`: Organization hosting the event
-3. Update `TRACKS` array with your 6 competition tracks.
-4. (Optional) Customize mascots or sizes in the same file.
+   - `name`: Full event title (e.g., `"NEXWIN"`)
+   - `organizer`: Organization hosting the event (e.g., `"Nexus Coding Club"`)
+   - `tagline`: Event tagline
+   - `badgeText`: Short pill badge text (e.g., `"NEXWIN 2026"`)
+   - `siteUrl`: Official hackathon website URL (or empty until deployed)
+   - `dates`: Event timeline & format (e.g., `"19–24 Oct 2026 · Online"`)
+   - `hashtags`: List of hashtags for social sharing (e.g., `["#NEXWIN", "#NexusCodingClub"]`)
+3. Update `TRACKS` array with your 5 competition tracks.
+4. Run `python tools/brand/generate_brand_assets.py` to regenerate brand assets from `docs/hackathondata/`.
 
 No code changes outside `lib/config.ts` are required to rebrand the event.
 

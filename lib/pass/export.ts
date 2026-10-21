@@ -72,7 +72,11 @@ export function generateCaption(participant: {
   }
 
   // 4. Dates & Site URL
-  lines.push(`🗓️ ${EVENT.dates}\n🌐 ${EVENT.siteUrl}`);
+  if (EVENT.siteUrl && EVENT.siteUrl.trim()) {
+    lines.push(`🗓️ ${EVENT.dates}\n🌐 ${EVENT.siteUrl}`);
+  } else {
+    lines.push(`🗓️ ${EVENT.dates}`);
+  }
 
   // 5. Hashtags
   if (EVENT.hashtags && EVENT.hashtags.length > 0) {
@@ -106,7 +110,7 @@ export function generateAltText(participant: {
   const trackName = TRACKS[trackIdx] ?? TRACKS[0];
 
   // 1. Core identification
-  parts.push(`Digital builder pass for ${name} at ${EVENT.name}.`);
+  parts.push(`Digital builder pass for ${name} at ${EVENT.name} by ${EVENT.organizer}.`);
 
   // 2. Mascot description
   parts.push(

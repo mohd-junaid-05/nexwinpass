@@ -13,6 +13,7 @@ import { drawMascot } from "../mascotPlaceholder";
 import { drawContactShadow, applySeededGrain, drawCardEdgeHighlight } from "../grain";
 import { drawMascotWorldPattern } from "../patterns";
 import { drawThemedFoilFrame, drawCollectorHoloEmblem } from "../foil";
+import { drawNexWinLogo } from "../logo";
 
 /**
  * Vertical Base Card Layout for Square (1080×1080) and Story (1080×1920).
@@ -29,8 +30,8 @@ export function renderVerticalPass(
   const width = 1080;
   const height = size === "square" ? 1080 : 1920;
   const mascot = getMascotConfig(participant.mascotId);
-  const trackIndex = Math.max(0, Math.min(5, participant.track || 0));
-  const trackName = TRACKS[trackIndex] || "Open Innovation";
+  const trackIndex = Math.max(0, Math.min(TRACKS.length - 1, participant.track || 0));
+  const trackName = TRACKS[trackIndex] || TRACKS[0];
   const isStory = size === "story";
 
   ctx.save();
@@ -100,26 +101,34 @@ export function renderVerticalPass(
   const contentW = width - 120;
   const contentX = 60;
 
-  // 3. Header Bar
+  // 3. Header Bar with NEXWIN logo
   const headerY = contentTop + 10;
   const isLight = style === "editorial";
   const isPop = style === "pop";
   const primaryTextColor = isPop ? "#000000" : isLight ? "#1A1715" : "#FFFFFF";
   const secondaryTextColor = isPop ? "rgba(0, 0, 0, 0.75)" : isLight ? "#78716C" : "#94A3B8";
 
+  const markSize = 44;
+  drawNexWinLogo(ctx, contentX, headerY, markSize, {
+    variant: isLight || isPop ? "simple" : "glow",
+    isDarkBackground: !isLight && !isPop,
+    color: primaryTextColor,
+  });
+
+  const headerTextX = contentX + markSize + 14;
   ctx.fillStyle = primaryTextColor;
   ctx.font = isPop
-    ? `900 28px ${FONTS.condensedPop}`
+    ? `900 26px ${FONTS.condensedPop}`
     : style === "collector"
-    ? `800 26px ${FONTS.techCollector}`
-    : `800 26px ${FONTS.sansFacts}`;
+    ? `800 24px ${FONTS.techCollector}`
+    : `800 24px ${FONTS.sansFacts}`;
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
-  ctx.fillText(`✱ ${EVENT.badgeText}`, contentX, headerY);
+  ctx.fillText(EVENT.name, headerTextX, headerY - 2);
 
   ctx.fillStyle = secondaryTextColor;
-  ctx.font = `600 18px ${FONTS.sansFacts}`;
-  ctx.fillText(`${EVENT.name} • by NexWin`, contentX, headerY + 34);
+  ctx.font = `600 16px ${FONTS.sansFacts}`;
+  ctx.fillText(`by ${EVENT.organizer}`, headerTextX, headerY + 26);
 
   // 4. Hero Participant Name
   const nameStartY = headerY + 70;
@@ -307,12 +316,16 @@ export function renderVerticalPass(
   // 7. Footer Row
   const footerY = footerAreaY + 15;
 
-  // Left: Event Site Link
+  // Left: Event Site Link or Pass Date Line
   ctx.fillStyle = isPop ? "#000000" : isLight ? "#1A1715" : "#38BDF8";
   ctx.font = `700 20px ${FONTS.sansFacts}`;
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
-  ctx.fillText(`${EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗`, contentX, footerY);
+  if (EVENT.siteUrl) {
+    ctx.fillText(`${EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗`, contentX, footerY);
+  } else {
+    ctx.fillText(EVENT.passDateLine, contentX, footerY);
+  }
 
   // Right: Track and Team
   const trackTeamText = formatTrackAndTeam(trackName, trackIndex, participant.team);

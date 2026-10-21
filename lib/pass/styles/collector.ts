@@ -12,6 +12,7 @@ import { drawMascot } from "../mascotPlaceholder";
 import { drawContactShadow, applySeededGrain, drawCardEdgeHighlight } from "../grain";
 import { drawMascotWorldPattern } from "../patterns";
 import { drawThemedFoilFrame, drawCollectorHoloEmblem } from "../foil";
+import { drawNexWinLogo } from "../logo";
 
 /**
  * Collector Style (Landscape 1920×1080):
@@ -26,8 +27,8 @@ export function renderCollectorStyle(
   height: number = 1080
 ): void {
   const mascot = getMascotConfig(participant.mascotId);
-  const trackIndex = Math.max(0, Math.min(5, participant.track || 0));
-  const trackName = TRACKS[trackIndex] || "Open Innovation";
+  const trackIndex = Math.max(0, Math.min(TRACKS.length - 1, participant.track || 0));
+  const trackName = TRACKS[trackIndex] || TRACKS[0];
 
   const scale = width / 1920;
 
@@ -153,15 +154,22 @@ export function renderCollectorStyle(
 
   // Event Header
   const headerY = Math.round(110 * scale);
+  const markSize = Math.round(52 * scale);
+  drawNexWinLogo(ctx, infoX, headerY, markSize, {
+    variant: "glow",
+    isDarkBackground: true,
+  });
+
+  const headerTextX = infoX + markSize + Math.round(14 * scale);
   ctx.fillStyle = "#FFFFFF";
   ctx.font = `800 ${Math.round(28 * scale)}px ${FONTS.techCollector}`;
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
-  ctx.fillText(`✱ ${EVENT.badgeText}`, infoX, headerY);
+  ctx.fillText(EVENT.name, headerTextX, headerY - Math.round(2 * scale));
 
   ctx.fillStyle = "#94A3B8";
-  ctx.font = `600 ${Math.round(20 * scale)}px ${FONTS.sansFacts}`;
-  ctx.fillText(`${EVENT.name} • by NexWin`, infoX, headerY + Math.round(38 * scale));
+  ctx.font = `600 ${Math.round(18 * scale)}px ${FONTS.sansFacts}`;
+  ctx.fillText(`by ${EVENT.organizer}`, headerTextX, headerY + Math.round(30 * scale));
 
   // Hero Participant Name (Sora)
   const nameStartY = Math.round(270 * scale);
@@ -217,12 +225,16 @@ export function renderCollectorStyle(
   // 4. Bottom Footer
   const footerY = Math.round(965 * scale);
 
-  // Left: Event Site Link
+  // Left: Event Site Link or Pass Date Line
   ctx.fillStyle = "#38BDF8";
   ctx.font = `700 ${Math.round(24 * scale)}px ${FONTS.techCollector}`;
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
-  ctx.fillText(`${EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗`, infoX, footerY);
+  if (EVENT.siteUrl) {
+    ctx.fillText(`${EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗`, infoX, footerY);
+  } else {
+    ctx.fillText(EVENT.passDateLine, infoX, footerY);
+  }
 
   // Right: Track and Team (dynamically sized and formatted, never overlaps)
   const trackTeamText = formatTrackAndTeam(trackName, trackIndex, participant.team);

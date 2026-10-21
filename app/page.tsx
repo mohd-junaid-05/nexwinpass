@@ -11,7 +11,7 @@ import {
 } from "react";
 import {
   EVENT,
-  TRACKS,
+  TRACK_DETAILS,
   SIZES,
   type SizeKey,
   MASCOTS,
@@ -640,23 +640,24 @@ export default function StudioPage() {
 
   return (
     <div className="studio-shell">
-      {/* Top Navbar */}
-      <header className="studio-topbar">
-        <div className="studio-topbar__badge" aria-label={EVENT.badgeText}>
-          <span className="studio-topbar__star" aria-hidden="true">
-            ✱
-          </span>
-          <span className="studio-topbar__badge-text">{EVENT.badgeText}</span>
+      {/* Top Navbar with NEXWIN Brand Lockup & Binary Texture */}
+      <header className="binary-texture-header">
+        <div className="studio-topbar">
+          <div className="studio-topbar__brand-wrap">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/logo.png"
+              alt="NEXWIN Logo"
+              className="studio-topbar__logo"
+              width={38}
+              height={38}
+            />
+            <div className="studio-topbar__titles">
+              <span className="studio-topbar__name">{EVENT.name}</span>
+              <span className="studio-topbar__by">Builder Pass Studio</span>
+            </div>
+          </div>
         </div>
-        <a
-          href={EVENT.siteUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="studio-topbar__link"
-          aria-label={`Visit ${EVENT.name} website (opens in a new tab)`}
-        >
-          {EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗
-        </a>
       </header>
 
       <div className="studio-body">
@@ -793,9 +794,9 @@ export default function StudioPage() {
                     onChange={(e) => setTrack(Number(e.target.value))}
                     disabled={!isUnlocked}
                   >
-                    {TRACKS.map((t, i) => (
-                      <option key={t} value={i}>
-                        {t}
+                    {TRACK_DETAILS.map((t, i) => (
+                      <option key={t.id} value={i}>
+                        {t.label}: {t.name}
                       </option>
                     ))}
                   </select>
@@ -1257,6 +1258,13 @@ export default function StudioPage() {
           </div>
         </section>
       </div>
+
+      {/* Minimal Footer */}
+      <footer className="studio-footer" role="contentinfo">
+        <p>
+          {EVENT.name} Builder Pass Studio · Organised by {EVENT.organizer}
+        </p>
+      </footer>
     </div>
   );
 }

@@ -1,8 +1,18 @@
 import type { TrackMarkShape } from "@/lib/config";
 
+export {
+  drawNexWinLogo,
+  drawNexWinLockup,
+} from "./logo";
+
 /**
  * Draws a geometric track mark directly onto canvas context inside the given bounding box.
- * Fully vector-based, crisp at any scale.
+ * Sourced for NEXWIN 5 tracks:
+ * - Track 01: event_calendar (Event & Workshop Management)
+ * - Track 02: open_book (Learning, Resources & Skill Development)
+ * - Track 03: governance_shield (Club Governance & Operations)
+ * - Track 04: community_nodes (Member Experience & Community)
+ * - Track 05: digital_broadcast (Public Relations & Digital Presence)
  */
 export function drawTrackMark(
   ctx: CanvasRenderingContext2D,
@@ -23,125 +33,57 @@ export function drawTrackMark(
   const r = size * 0.42;
 
   switch (mark) {
-    case "neural_node": {
-      // Spark/diamond lattice with 4 satellite nodes
+    case "event_calendar": {
+      // Modern calendar card with hanging loops and day star
+      const bw = r * 0.85;
+      const bh = r * 0.8;
+      const topY = -r * 0.65;
+
+      // Calendar body
       ctx.beginPath();
-      ctx.moveTo(0, -r);
-      ctx.lineTo(r, 0);
-      ctx.lineTo(0, r);
-      ctx.lineTo(-r, 0);
-      ctx.closePath();
+      ctx.strokeRect(-bw, topY, bw * 2, bh * 1.6);
+
+      // Header divider line
+      ctx.beginPath();
+      ctx.moveTo(-bw, topY + bh * 0.45);
+      ctx.lineTo(bw, topY + bh * 0.45);
       ctx.stroke();
 
-      // Satellite dots
-      const dotR = Math.max(2, size * 0.09);
-      const points = [
-        [0, -r],
-        [r, 0],
-        [0, r],
-        [-r, 0],
-        [0, 0],
-      ];
-      for (const [px, py] of points) {
-        ctx.beginPath();
-        ctx.arc(px, py, dotR, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      break;
-    }
-
-    case "blockchain_cube": {
-      // Isometric 3D Hexagon/Cube
-      const h = r;
-      const w = r * 0.866;
+      // Top binder rings
+      const ringOffset = bw * 0.5;
+      const ringH = r * 0.25;
       ctx.beginPath();
-      // Outer hexagon
-      ctx.moveTo(0, -h);
-      ctx.lineTo(w, -h * 0.5);
-      ctx.lineTo(w, h * 0.5);
-      ctx.lineTo(0, h);
-      ctx.lineTo(-w, h * 0.5);
-      ctx.lineTo(-w, -h * 0.5);
-      ctx.closePath();
+      ctx.moveTo(-ringOffset, topY - ringH);
+      ctx.lineTo(-ringOffset, topY);
+      ctx.moveTo(ringOffset, topY - ringH);
+      ctx.lineTo(ringOffset, topY);
       ctx.stroke();
 
-      // Inner Y edges
+      // Center spark node representing an event day
       ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(0, h);
-      ctx.moveTo(0, 0);
-      ctx.lineTo(w, -h * 0.5);
-      ctx.moveTo(0, 0);
-      ctx.lineTo(-w, -h * 0.5);
-      ctx.stroke();
-      break;
-    }
-
-    case "double_helix": {
-      // Intertwined helix wave with 3 crossbars
-      const w = r * 0.75;
-      ctx.beginPath();
-      // Strand 1
-      ctx.moveTo(-w, -r);
-      ctx.bezierCurveTo(w, -r * 0.33, -w, r * 0.33, w, r);
-      ctx.stroke();
-
-      // Strand 2
-      ctx.beginPath();
-      ctx.moveTo(w, -r);
-      ctx.bezierCurveTo(-w, -r * 0.33, w, r * 0.33, -w, r);
-      ctx.stroke();
-
-      // Crossbars
-      ctx.beginPath();
-      ctx.moveTo(-w * 0.5, -r * 0.65);
-      ctx.lineTo(w * 0.5, -r * 0.65);
-      ctx.moveTo(-w * 0.3, 0);
-      ctx.lineTo(w * 0.3, 0);
-      ctx.moveTo(-w * 0.5, r * 0.65);
-      ctx.lineTo(w * 0.5, r * 0.65);
-      ctx.stroke();
-      break;
-    }
-
-    case "leaf_rings": {
-      // Botanical leaf profile with concentric arc
-      ctx.beginPath();
-      ctx.moveTo(0, -r);
-      ctx.quadraticCurveTo(r * 0.9, -r * 0.2, 0, r);
-      ctx.quadraticCurveTo(-r * 0.9, -r * 0.2, 0, -r);
-      ctx.stroke();
-
-      // Center vein
-      ctx.beginPath();
-      ctx.moveTo(0, -r * 0.8);
-      ctx.lineTo(0, r * 0.8);
-      ctx.stroke();
-
-      // Side ring arc
-      ctx.beginPath();
-      ctx.arc(0, 0, r * 0.5, -Math.PI * 0.3, Math.PI * 0.3);
-      ctx.stroke();
+      ctx.arc(0, topY + bh * 1.05, Math.max(2.5, size * 0.09), 0, Math.PI * 2);
+      ctx.fill();
       break;
     }
 
     case "open_book": {
-      // Modern stylized chevron book with beacon
+      // Modern stylized chevron book with learning beacon
+      const bw = r * 0.85;
       ctx.beginPath();
       // Left page
-      ctx.moveTo(-r * 0.85, -r * 0.4);
-      ctx.quadraticCurveTo(-r * 0.4, -r * 0.6, 0, -r * 0.2);
+      ctx.moveTo(-bw, -r * 0.4);
+      ctx.quadraticCurveTo(-bw * 0.5, -r * 0.6, 0, -r * 0.2);
       ctx.lineTo(0, r * 0.6);
-      ctx.quadraticCurveTo(-r * 0.4, r * 0.2, -r * 0.85, r * 0.4);
+      ctx.quadraticCurveTo(-bw * 0.5, r * 0.2, -bw, r * 0.4);
       ctx.closePath();
       ctx.stroke();
 
       // Right page
       ctx.beginPath();
-      ctx.moveTo(r * 0.85, -r * 0.4);
-      ctx.quadraticCurveTo(r * 0.4, -r * 0.6, 0, -r * 0.2);
+      ctx.moveTo(bw, -r * 0.4);
+      ctx.quadraticCurveTo(bw * 0.5, -r * 0.6, 0, -r * 0.2);
       ctx.lineTo(0, r * 0.6);
-      ctx.quadraticCurveTo(r * 0.4, r * 0.2, r * 0.85, r * 0.4);
+      ctx.quadraticCurveTo(bw * 0.5, r * 0.2, bw, r * 0.4);
       ctx.closePath();
       ctx.stroke();
 
@@ -152,23 +94,91 @@ export function drawTrackMark(
       break;
     }
 
-    case "compass_star": {
-      // 8-point innovation spark
+    case "governance_shield": {
+      // Clean angular cyber-shield with internal governance balance pillar
+      const sw = r * 0.8;
       ctx.beginPath();
-      for (let i = 0; i < 8; i++) {
-        const angle = (i * Math.PI) / 4;
-        const rad = i % 2 === 0 ? r : r * 0.42;
-        const px = Math.cos(angle) * rad;
-        const py = Math.sin(angle) * rad;
-        if (i === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
-      }
+      ctx.moveTo(0, -r);
+      ctx.lineTo(sw, -r * 0.6);
+      ctx.lineTo(sw, r * 0.2);
+      ctx.quadraticCurveTo(sw * 0.5, r * 0.8, 0, r);
+      ctx.quadraticCurveTo(-sw * 0.5, r * 0.8, -sw, r * 0.2);
+      ctx.lineTo(-sw, -r * 0.6);
       ctx.closePath();
       ctx.stroke();
 
+      // Central pillar of governance
       ctx.beginPath();
-      ctx.arc(0, 0, Math.max(2, size * 0.08), 0, Math.PI * 2);
+      ctx.moveTo(0, -r * 0.5);
+      ctx.lineTo(0, r * 0.55);
+      ctx.moveTo(-sw * 0.4, -r * 0.1);
+      ctx.lineTo(sw * 0.4, -r * 0.1);
+      ctx.stroke();
+      break;
+    }
+
+    case "community_nodes": {
+      // Network of 3 connected community members
+      const nr = Math.max(2.5, size * 0.09);
+      const topY = -r * 0.7;
+      const bY = r * 0.55;
+      const bX = r * 0.75;
+
+      // Connecting bridge lines
+      ctx.beginPath();
+      ctx.moveTo(0, topY);
+      ctx.lineTo(-bX, bY);
+      ctx.lineTo(bX, bY);
+      ctx.closePath();
+      ctx.stroke();
+
+      // 3 Community Member Nodes
+      const nodes = [
+        [0, topY],
+        [-bX, bY],
+        [bX, bY],
+      ];
+      for (const [nx, ny] of nodes) {
+        ctx.beginPath();
+        ctx.arc(nx, ny, nr, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Center synergy spark
+      ctx.beginPath();
+      ctx.arc(0, r * 0.1, Math.max(1.8, size * 0.05), 0, Math.PI * 2);
       ctx.fill();
+      break;
+    }
+
+    case "digital_broadcast": {
+      // Concentric signal waves and central transmitter tower
+      ctx.beginPath();
+      // Outer waves
+      ctx.arc(0, 0, r * 0.85, -Math.PI * 0.35, Math.PI * 0.35);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.85, Math.PI * 0.65, Math.PI * 1.35);
+      ctx.stroke();
+
+      // Inner waves
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.5, -Math.PI * 0.35, Math.PI * 0.35);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.5, Math.PI * 0.65, Math.PI * 1.35);
+      ctx.stroke();
+
+      // Transmitter beacon
+      ctx.beginPath();
+      ctx.arc(0, 0, Math.max(2.5, size * 0.09), 0, Math.PI * 2);
+      ctx.fill();
+
+      // Base mast
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, r * 0.9);
+      ctx.stroke();
       break;
     }
   }

@@ -12,6 +12,7 @@ import {
 import { drawMascot } from "../mascotPlaceholder";
 import { drawContactShadow, applySeededGrain, drawCardEdgeHighlight } from "../grain";
 import { drawMascotWorldPattern } from "../patterns";
+import { drawNexWinLogo } from "../logo";
 
 /**
  * Editorial Style (Landscape 1920×1080):
@@ -26,8 +27,8 @@ export function renderEditorialStyle(
   height: number = 1080
 ): void {
   const mascot = getMascotConfig(participant.mascotId);
-  const trackIndex = Math.max(0, Math.min(5, participant.track || 0));
-  const trackName = TRACKS[trackIndex] || "Open Innovation";
+  const trackIndex = Math.max(0, Math.min(TRACKS.length - 1, participant.track || 0));
+  const trackName = TRACKS[trackIndex] || TRACKS[0];
 
   const scale = width / 1920;
 
@@ -134,15 +135,23 @@ export function renderEditorialStyle(
 
   // Event Header
   const headerY = Math.round(110 * scale);
+  const markSize = Math.round(48 * scale);
+  drawNexWinLogo(ctx, infoX, headerY, markSize, {
+    variant: "simple",
+    isDarkBackground: false,
+    color: "#1A1715",
+  });
+
+  const headerTextX = infoX + markSize + Math.round(14 * scale);
   ctx.fillStyle = "#1A1715";
   ctx.font = `800 ${Math.round(28 * scale)}px ${FONTS.sansFacts}`;
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
-  ctx.fillText(`✱ ${EVENT.badgeText}`, infoX, headerY);
+  ctx.fillText(EVENT.name, headerTextX, headerY - Math.round(2 * scale));
 
   ctx.fillStyle = "#78716C";
-  ctx.font = `600 ${Math.round(20 * scale)}px ${FONTS.sansFacts}`;
-  ctx.fillText(`${EVENT.name} • by NexWin`, infoX, headerY + Math.round(38 * scale));
+  ctx.font = `600 ${Math.round(18 * scale)}px ${FONTS.sansFacts}`;
+  ctx.fillText(`by ${EVENT.organizer}`, headerTextX, headerY + Math.round(28 * scale));
 
   // Hairline divider below header
   const headerDivY = Math.round(185 * scale);
@@ -199,12 +208,16 @@ export function renderEditorialStyle(
 
   const footerY = Math.round(965 * scale);
 
-  // Left: Event Site Link
+  // Left: Event Site Link or Pass Date Line
   ctx.fillStyle = "#1A1715";
   ctx.font = `800 ${Math.round(24 * scale)}px ${FONTS.sansFacts}`;
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
-  ctx.fillText(`${EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗`, infoX, footerY);
+  if (EVENT.siteUrl) {
+    ctx.fillText(`${EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗`, infoX, footerY);
+  } else {
+    ctx.fillText(EVENT.passDateLine, infoX, footerY);
+  }
 
   // Right: Track and Team (dynamically sized and formatted, never overlaps)
   const trackTeamText = formatTrackAndTeam(trackName, trackIndex, participant.team);

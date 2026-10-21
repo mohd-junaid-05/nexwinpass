@@ -46,7 +46,7 @@
     "teamId": "GC-017",
     "track": 3,
     "role": "Member",
-    "members": 4
+    "members": 3
   },
   {
     "email": "frank@example.com",
@@ -75,7 +75,7 @@
     "teamId": "TI-024",
     "track": 3,
     "role": "Member",
-    "members": 4,
+    "members": 3,
     "idea": "సుస్థిర వ్యవసాయం కోసం స్మార్ట్ సెన్సార్లు"
   },
   {

@@ -10,6 +10,9 @@ const qrCache = new Map<string, QRCode.QRCode>();
  * Carries zero personal data.
  */
 export function getPassQrUrl(passId: string): string {
+  if (!EVENT.siteUrl || !EVENT.siteUrl.trim()) {
+    return "";
+  }
   const cleanId = encodeURIComponent(passId.trim());
   return `${EVENT.siteUrl}?pass=${cleanId}`;
 }
@@ -49,6 +52,9 @@ export function drawPassQrCode(
   size: number,
   options: DrawQrOptions = {}
 ): void {
+  if (!EVENT.siteUrl || !EVENT.siteUrl.trim()) {
+    return;
+  }
   const qr = getOrCreateQrCode(passId);
   const darkColor = options.darkColor ?? "#000000";
   const lightColor = options.lightColor ?? "#FFFFFF";

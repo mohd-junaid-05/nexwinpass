@@ -1,36 +1,172 @@
 /**
- * Single source of truth for event-specific text, tracks, and export sizes.
- * Changing the event later means editing this file and nothing else.
+ * Single source of truth for NEXWIN hackathon text, tracks, dates, and export sizes.
+ * Sourced directly from docs/hackathondata/event.json.
  */
 
 export const EVENT = {
-  name: "NexWin Hackathon 2026",
-  badgeText: "NEXWIN/HACK 26",
-  siteUrl: "https://nexwin.dev",
-  dates: "1–7 Nov 2026 · Online",
-  hashtags: ["#NexWinHack", "#NexWin2026", "#BuildersUnite"],
-  organiser: "NexWin Foundation",
-} as const;
+  name: "NEXWIN",
+  organizer: "Nexus Coding Club",
+  year: 2026,
+  tagline: "Find the problem. Build the solution. Show what you can do.",
+  summary:
+    "An internal online hackathon organized by Nexus Coding Club. Turn an idea into a working project, explore new technologies, experiment with AI, and learn by building something meaningful.",
+  badgeText: "NEXWIN 2026",
+  siteUrl: "" as string, // Left empty until deployed pass page address is provided by operator
+  dates: "19–24 Oct 2026 · Online",
+  passDateLine: "19–24 Oct 2026 · Online",
+  hashtags: ["#NEXWIN", "#NexusCodingClub"] as readonly string[],
+  scheduleNote:
+    "Dates and timings are subject to change in the event of unforeseen circumstances. Any changes will be communicated through official NEXWIN announcements.",
+  timezone: "Asia/Kolkata",
+};
 
 export const TRACKS = [
-  "AI & Machine Learning",
-  "Web3 & Blockchain",
-  "Health & Biotech",
-  "Climate & Sustainability",
-  "Education & Access",
-  "Open Innovation",
+  "Event & Workshop Management",
+  "Learning, Resources & Skill Development",
+  "Club Governance & Operations",
+  "Member Experience & Community",
+  "Public Relations & Digital Presence",
 ] as const;
 
 export const TRACK_DETAILS = [
-  { name: "AI & Machine Learning", mark: "neural_node", symbol: "✦" },
-  { name: "Web3 & Blockchain", mark: "blockchain_cube", symbol: "⬡" },
-  { name: "Health & Biotech", mark: "double_helix", symbol: "🧬" },
-  { name: "Climate & Sustainability", mark: "leaf_rings", symbol: "◎" },
-  { name: "Education & Access", mark: "open_book", symbol: "⎊" },
-  { name: "Open Innovation", mark: "compass_star", symbol: "✳" },
+  {
+    id: 1,
+    label: "Track 01",
+    name: "Event & Workshop Management",
+    shortName: "Events & Workshops",
+    mark: "event_calendar" as const,
+    symbol: "🗓",
+    focus:
+      "Improving the planning, organization, and experience of club events and workshops.",
+  },
+  {
+    id: 2,
+    label: "Track 02",
+    name: "Learning, Resources & Skill Development",
+    shortName: "Learning & Skills",
+    mark: "open_book" as const,
+    symbol: "📖",
+    focus:
+      "Making learning resources easier to access and helping members develop technical skills.",
+  },
+  {
+    id: 3,
+    label: "Track 03",
+    name: "Club Governance & Operations",
+    shortName: "Governance & Ops",
+    mark: "governance_shield" as const,
+    symbol: "🛡",
+    focus:
+      "Improving internal workflows and the day-to-day operations of the club.",
+  },
+  {
+    id: 4,
+    label: "Track 04",
+    name: "Member Experience & Community",
+    shortName: "Member Experience",
+    mark: "community_nodes" as const,
+    symbol: "👥",
+    focus:
+      "Improving the experience of club members and strengthening the community.",
+  },
+  {
+    id: 5,
+    label: "Track 05",
+    name: "Public Relations & Digital Presence",
+    shortName: "PR & Digital",
+    mark: "digital_broadcast" as const,
+    symbol: "📡",
+    focus:
+      "Improving how the club communicates, presents itself, and shares its work with an audience.",
+  },
 ] as const;
 
 export type TrackMarkShape = (typeof TRACK_DETAILS)[number]["mark"];
+
+export const AT_A_GLANCE = [
+  { label: "Eligibility", value: "Nexus Coding Club members only" },
+  { label: "Mode", value: "Online" },
+  { label: "Duration", value: "Approximately one week" },
+  { label: "Team size", value: "1–3 members" },
+  { label: "Tracks", value: "Choose one of five tracks" },
+  { label: "Technology", value: "Any suitable technology" },
+  { label: "AI usage", value: "Encouraged, but optional" },
+  { label: "Project", value: "A new project built for NEXWIN" },
+  { label: "Deployment", value: "Required for final submission" },
+  { label: "Registration", value: "Devfolio" },
+  { label: "Team communication", value: "Discord" },
+  { label: "Final presentation", value: "Google Meet" },
+] as const;
+
+export const STAGES = [
+  {
+    order: 1,
+    title: "Idea Submission",
+    purpose: "Plan your project before you start building.",
+  },
+  {
+    order: 2,
+    title: "Mid-Hackathon Review",
+    purpose:
+      "Show your progress, explain your work, and improve your project.",
+  },
+  {
+    order: 3,
+    title: "Final Submission and Presentation",
+    purpose: "Complete your project and demonstrate the final result.",
+  },
+] as const;
+
+export const SCHEDULE = [
+  {
+    order: 1,
+    title: "Idea Submission",
+    display: "Monday, 19 October 2026 · 4:00 PM",
+    date: "2026-10-19",
+    time: "16:00",
+    description:
+      "Submit your Idea Document outlining your selected track, proposed solution, technology stack, team responsibilities, and execution plan.",
+  },
+  {
+    order: 2,
+    title: "Mid-Hackathon Review",
+    display: "Wednesday, 21 October 2026 · 3:00 PM",
+    date: "2026-10-21",
+    time: "15:00",
+    description:
+      "Present your progress, demonstrate the working parts of your project, and receive feedback from the organizing team. This is a progress review, not an elimination round.",
+  },
+  {
+    order: 3,
+    title: "Final Submission Deadline",
+    display: "Friday, 23 October 2026 · 11:59 PM",
+    date: "2026-10-23",
+    time: "23:59",
+    description:
+      "Submit your completed working project, deployment link, presentation slides, and all other required deliverables before the deadline.",
+  },
+  {
+    order: 4,
+    title: "NEXWIN Finals — Project Presentation",
+    display: "Saturday, 24 October 2026 · Timing to be announced",
+    date: "2026-10-24",
+    time: null,
+    description:
+      "Present your final project to the reviewing team, explain your solution and technical decisions, and showcase your team's contributions. Presentation timings and further instructions will be announced by the organizers.",
+  },
+] as const;
+
+/**
+ * Brand logo configuration.
+ * - Clear space: fixed fraction (10%) of mark size.
+ * - Minimum size for detailed glow mark: 72px. Below this, simple mark is used.
+ */
+export const LOGO_CONFIG = {
+  clearSpaceFraction: 0.05,
+  minDetailedSize: 32,
+  logoPath: "/brand/logo.png",
+  glowPath: "/brand/logo-glow.png",
+} as const;
 
 export const SIZES = {
   pass: { width: 1920, height: 1080, label: "The pass" },
@@ -137,4 +273,3 @@ export const MASCOTS = MASCOT_MANIFEST;
 export function getMascotConfig(id: MascotId | string): MascotConfig {
   return getMascotManifestEntry(id);
 }
-

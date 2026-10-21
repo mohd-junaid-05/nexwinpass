@@ -345,4 +345,54 @@
 
 - Physical scanner decoding from printed inkjet paper under variable room lighting conditions
 
+---
+
+## Phase 8 — NEXWIN Identity ✅
+
+**Status:** Complete  
+**Date:** 2026-10-21
+
+### What was built
+
+| Item | File(s) | Status |
+|---|---|---|
+| Inventory of `docs/hackathondata/` and data source verification | `docs/hackathondata/` | ✅ Done |
+| Repeatable brand asset generator (resizing exact source logo only) | `tools/brand/generate_brand_assets.py` | ✅ Done |
+| Authentic logo & transparent glow mark (512×512 directly from source) | `public/brand/logo.png`, `public/brand/logo-glow.png` | ✅ Done |
+| App icons & multi-resolution favicon suite from exact source logo | `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico`, `public/favicon.ico` | ✅ Done |
+| Single source of truth update with NEXWIN details, 5 tracks, stages & schedule | `lib/config.ts` | ✅ Done |
+| Five geometric track marks (Event, Learning, Governance, Community, Broadcast) | `lib/pass/marks.ts`, `lib/config.ts` | ✅ Done |
+| Canvas brand logo drawer using authentic logo only | `lib/pass/logo.ts`, `lib/pass/marks.ts` | ✅ Done |
+| Pass style headers updated with authentic NEXWIN logo | `lib/pass/styles/*` | ✅ Done |
+| Stamp and sticker updated to NEXWIN 2026 | `lib/pass/stamp.ts`, `lib/config.ts` | ✅ Done |
+| QR code and web address suppression until public address is provided | `lib/pass/qr.ts`, `lib/pass/styles/*` | ✅ Done |
+| Ready-to-post caption & alt text updated for NEXWIN and Nexus Coding Club | `lib/pass/export.ts` | ✅ Done |
+| Streamlined post pass generator UI (clean minimal header, no hackathon event sections) | `app/page.tsx`, `app/globals.css` | ✅ Done |
+| Devfolio export converter tool for single-file registration swap | `tools/convert_devfolio.py` | ✅ Done |
+| Dark neon OpenGraph & Twitter social preview card | `app/opengraph-image.tsx`, `app/layout.tsx` | ✅ Done |
+| Removal of placeholder event names, URLs and branding | Across repo | ✅ Done |
+
+### Acceptance check
+
+| # | Check | Result |
+|---|---|---|
+| 1 | Logo & Icons: Only `docs/hackathondata/NEXWIN_fav & logo.png` used across favicon, apple-icon, icon.png and passes without redrawn vector alternatives | ✅ Pass — directly resized with Lanczos filter; deleted `icon.svg` |
+| 2 | Post Pass Generator Focus: Removed bottom overview & hackathon sections and header date paragraphs | ✅ Pass — pure pass generator UI with minimal studio footer |
+| 3 | Logo variants on dark/light passes: authentic logo rendered with crisp dimensions | ✅ Pass — `public/brand/logo.png` & `public/brand/logo-glow.png` |
+| 4 | Share preview in chat app shows NEXWIN logo, name, tagline in dark neon look with zero personal data | ✅ Pass — `app/opengraph-image.tsx` built with Next.js ImageResponse |
+| 5 | Five tracks displayed across form and passes with "Track 0X" label and custom geometric marks | ✅ Pass — Track 01 to Track 05 with dedicated marks and labels |
+| 6 | 375px responsive fit with pass tool immediately visible; keyboard accessible | ✅ Pass — mobile-first CSS, high-contrast dark tokens, and accessible controls |
+| 7 | Contrast checks on dark theme meet accessibility rules (body >= 4.5:1, display >= 3:1) | ✅ Pass — `#EDF7EE` on `#080C09` (18.6:1), `#00FF88` on `#080C09` (13.7:1), `#8FA895` on `#080C09` (7.2:1) |
+| 8 | Pass design integrity preserved: layouts, mascots, styles, and sizes untouched | ✅ Pass — four styles and five sizes intact |
+| 9 | Until pass address is configured, no QR code or web address appears on passes | ✅ Pass — guarded in `lib/pass/qr.ts` and footers; displays date line when URL is empty |
+| 10 | Devfolio converter created with column mapping documentation | ✅ Pass — `tools/convert_devfolio.py` created |
+| 11 | `npm run build` and `npm run lint` pass clean | ✅ Pass — ESLint 0 warnings/errors, Next.js 16.4.2 build exit code 0 |
+
+### Not verified (needs manual operator confirmation)
+
+- Deployed URL for QR code encoding (currently left blank as requested)
+- Operator choice for Devfolio team ID mapping if export omits team code
+
+
+
 
