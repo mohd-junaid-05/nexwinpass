@@ -12,6 +12,7 @@ interface Registration {
   role: string;
   members: number;
   idea?: string;
+  number?: number;
 }
 
 let registrations: Registration[] | null = null;
@@ -69,5 +70,6 @@ export async function POST(request: NextRequest) {
     role: match.role,
     members: match.members,
     idea: match.idea ?? "",
+    number: match.number,
   });
 }

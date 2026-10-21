@@ -53,33 +53,44 @@ The feature is inspired by a public hackathon pass page we studied. We follow a 
 - Each mascot uses high-resolution pre-rendered character assets with normalized head sizes and baselines, transparent backgrounds, and character-specific color themes. Preloaded asynchronously and cached in memory.
 
 ### 5.4 Style picker
-- 4 layouts: **Editorial**, **Night**, **Pop**, **Collector**. Tiles show a live thumbnail with the participant's real details.
+- 4 distinct landscape looks:
+  - **Editorial:** Warm tinted paper, large bold mascot theme arch shape behind character, big refined display serif name with deliberate layered character depth (character stands in front of part of the name), idea title in an italic accent voice, and a perforated ticket stub with QR code.
+  - **Night:** Deep obsidian card with a lit stage: spotlight in the mascot's glow colour, soft floor reflection under the character, mascot's world pattern fading in from edge, wide geometric sans for the name (Syne), and monospaced voice for labels.
+  - **Pop:** Saturated full-bleed colour world with layered gradients, oversized tightly stacked heavy name (Anton), idea on a tilted tape/ticket label, character breaking out of a rotated rounded-square frame, and a circular rubber-stamp mark with seeded rotation.
+  - **Collector:** Dark trading-card look with a themed foil frame derived from the mascot's theme palette, standalone character card panel, clean information column, techy display type (Sora), and a true serial line.
 
 ### 5.5 Sizes (tabs above the preview)
-| Tab | Size | Use |
-|---|---|---|
-| The pass | 1080×1350 | Main download |
-| Square | 1080×1080 | Feed posts |
-| Link | 1200×630 | Link previews |
-| Story | 1080×1920 | Stories |
+| Tab | Size | Use | Base Layout |
+|---|---|---|---|
+| The pass | 1920×1080 | Main download | Landscape base |
+| Link | 1200×630 | Link previews | Landscape base (with bleed) |
+| Square | 1080×1080 | Feed posts | Vertical base |
+| Story | 1080×1920 | Stories | Vertical base |
+| Avatar | 1080×1080 | Profile avatars | Inscribed circle bust crop |
 
-Non-pass sizes show the pass tilted on a coloured background with the headline `I'm building at {event}` and the site plus dates underneath.
+Every pass features an authentic perforated ticket stub area holding a verified scannable QR code (public URL + pass ID only), true registration serial ("No. 042" if number exists, else derived pass ID), and admission line.
 
 ### 5.6 Actions
 - **Download PNG:** current size.
-- **All sizes:** downloads all four, one after another.
+- **All sizes:** downloads all five sequentially.
 - **Copy image:** clipboard PNG, with a clear fallback message when unsupported.
 - **Copy caption:** event, idea, team, track, GitHub link, dates, site and hashtags.
+- **Copy alt text:** accessible pass description for screen reader users.
 
 ### 5.7 Pass content
-Event badge, participant name (title-cased), idea title, track, team and team ID, GitHub handle, mascot, a short pass ID derived from the email, and the site URL.
+Event badge, participant name (title-cased), idea title, track (with geometric mark), team and team ID, role badge, GitHub handle, mascot, true serial line, scannable QR code, and site URL.
 
 ## 6. Architecture
 
-- **UI:** one client component page; state for form, mascot, style, size, lookup status.
-- **Rendering:** Canvas 2D draws the pass from a 1080×1350 base. Other sizes scale and tilt that card. Export uses an offscreen canvas so the preview is never disturbed.
-- **Mascots:** `lib/mascots/manifest` and `lib/mascotImage` manage high-resolution pre-rendered character assets (`public/mascots/*.png`) with head/baseline normalization, theme colors, and async preloading. No runtime 3D library is loaded.
-- **Config:** `lib/config` holds all event text, tracks and sizes.
+- **UI:** client component studio page; state for form, mascot, style, size, lookup status. Live preview stage with pointer 3D tilt, light sheen, and landscape thumbnail tiles.
+- **Rendering:** Pure 2D Canvas with a two-base layout architecture:
+  - Landscape Base: for "The pass" (1920×1080) and "Link" (1200×630 with bleed).
+  - Vertical Base: for "Square" (1080×1080) and "Story" (1080×1920).
+  - Avatar: centered circular bust crop (1080×1080).
+- **Mascots:** `lib/mascots/manifest` and `lib/mascotImage` manage pre-rendered character assets (`public/mascots/*.png`) with head/baseline normalization, theme colors, and async preloading.
+- **Patterns:** `lib/pass/patterns` generates 8 signature vector world patterns in code, deterministically seeded per pass ID.
+- **Ticket Stubs:** `lib/pass/stub` draws perforated tear notches, dashed cut lines, quiet-zone QR pads, and true serial lines.
+- **Config:** `lib/config` holds all event text, tracks, sizes, and safe zones.
 - **API:** `POST /api/lookup` reads `data/registrations.json`.
 
 ### API contract

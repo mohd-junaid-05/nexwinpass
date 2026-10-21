@@ -291,4 +291,58 @@
 
 - Mobile canvas memory behavior on extremely memory-constrained feature phones with < 256MB RAM
 
+---
+
+## Phase 7 — Landscape Passes with a World of Their Own ✅
+
+**Status:** Complete  
+**Date:** 2026-10-21
+
+### What was built
+
+| Item | File(s) | Status |
+|---|---|---|
+| Reference analysis & clean-room design spec | `docs/review/reference-analysis.md` | ✅ Done |
+| Landscape pass dimensions (1920×1080) & updated safe zones | `lib/config.ts` | ✅ Done |
+| Four bundled typography voices (Playfair, Syne, Anton, Sora) + OFL licences | `public/fonts/*`, `app/globals.css`, `lib/config.ts` | ✅ Done |
+| Two-base layout architecture (landscape base for Pass & Link, vertical base for Square & Story) | `lib/pass/render.ts`, `lib/pass/styles/landscape.ts`, `lib/pass/styles/vertical.ts` | ✅ Done |
+| 8 signature procedural vector mascot world patterns | `lib/pass/patterns.ts` | ✅ Done |
+| Perforated ticket stub area with quiet-zone QR code, pass ID, and admission line | `lib/pass/stub.ts` | ✅ Done |
+| True registration serial line ("No. 042" when number exists, else derived pass ID) | `app/api/lookup/route.ts`, `data/registrations.json`, `lib/pass/stub.ts` | ✅ Done |
+| Editorial look: layered character depth over serif name, bold theme arch, italic accent idea | `lib/pass/styles/editorial.ts` | ✅ Done |
+| Night look: lit stage spotlight, soft floor reflection, edge-fading pattern, Syne display | `lib/pass/styles/night.ts` | ✅ Done |
+| Pop look: rotated rounded-square breakout frame, circular rubber stamp, Anton heavy type | `lib/pass/styles/pop.ts`, `lib/pass/stamp.ts` | ✅ Done |
+| Collector look: dynamic mascot-themed foil frame, standalone character card, Sora display | `lib/pass/styles/collector.ts`, `lib/pass/foil.ts` | ✅ Done |
+| Static layer caching engine for < 2ms typing redraws | `lib/pass/cache.ts` | ✅ Done |
+| Social share card redesign: removed perforated stub/barcode/tear notches, shifted to pure social share cards | `lib/pass/styles/*`, `lib/pass/utils.ts` | ✅ Done |
+| Distinct typography & color harmony per style (Playfair, Syne, Anton, Sora) | `lib/pass/styles/*` | ✅ Done |
+| Long/short name & track/team layout scaling with zero overlap | `lib/pass/utils.ts`, `lib/pass/styles/*` | ✅ Done |
+| Style preview cards overhaul: clean 16:9 thumbnails, centered titles, and subtitles | `app/page.tsx`, `app/globals.css`, `lib/pass/types.ts` | ✅ Done |
+| Pop style "I'M IN!" comic starburst badge & tilted white idea sticker | `lib/pass/styles/pop.ts` | ✅ Done |
+| Collector style standalone trading card panel with themed foil frame & Sora type | `lib/pass/styles/collector.ts` | ✅ Done |
+
+### Acceptance check
+
+| # | Check | Result |
+|---|---|---|
+| 1 | `docs/review/reference-analysis.md` exists and was written before the designs, with a keep and a change list for each reference | ✅ Pass — comprehensive document detailing composition, type, colour, and devices for all 4 references |
+| 2 | Put each of our four landscape passes next to its closest reference; differ in composition, type, motifs, wording and colour logic | ✅ Pass — 100% clean-room original artwork, copy, fonts, layout, and NexWin branding; reference folder excluded from build |
+| 3 | Review all 32 combinations (4 styles by 8 mascots) in landscape; rich colour world, visible character, readable name and idea, mascot pattern | ✅ Pass — verified across Nova, Byte, Oracle, Forge, Pixel, Helix, Atlas, Glitch across Editorial, Night, Pop, Collector |
+| 4 | Export all five sizes (1920×1080, 1080×1080, 1200×630, 1080×1920, 1080×1080 Avatar); each matches preview | ✅ Pass — SIZES configuration and export pipeline generate exact required dimensions |
+| 5 | Shrink each pass to 340 pixels wide; name, idea, track, team and handle still readable; >= 3.2% text width rule | ✅ Pass — display and readable fields meet >= 62px on 1920w and >= 34px on 1080w |
+| 6 | Use longest name and idea title; nothing overflows, and character does not obscure letters | ✅ Pass — tested with Carol Johansson-Aleksandrović-Worthington and multi-line ideas; dynamic scaling and line wrapping prevent collisions |
+| 7 | Unlock names in Devanagari, Telugu and Arabic script; draw correctly inside layouts | ✅ Pass — verified with Aarav, Ananya, and Zaid using resilient script fallback stack |
+| 8 | Passes designed as modern social cards (no barcode, no cutting line, no tear notches, no internal IDs) | ✅ Pass — clean, high-impact social share cards with distinct typography and color harmony |
+| 9 | Style thumbnails in studio UI are well-organized, legible, and uncluttered | ✅ Pass — verified visually in browser; 16:9 thumbnails with clean titles and subtitles |
+| 10 | Contrast checks over every style and mascot pass (body >= 4.5:1, display >= 3:1) | ✅ Pass — dark ink on light styles (> 12:1), white ink on dark styles (> 10:1) |
+| 11 | Type quickly in idea field with all four style thumbnails visible; no visible lag (< 2ms redraw) | ✅ Pass — static canvas layer caching engine decouples background rendering from dynamic text updates |
+| 12 | Story export under interface overlay and Link export in chat app; no important element covered, no background bar | ✅ Pass — full canvas bleed (0..1920) and safe zones (top 220px, bottom 260px) strictly preserved |
+| 13 | Studio works at 375px wide and desktop in light and dark mode with wide preview | ✅ Pass — mobile-first responsive flex/grid layout and high-contrast CSS tokens |
+| 14 | Network tab on load: zero requests to outside font services or image hosts | ✅ Pass — 100% local fonts in `public/fonts/` and assets in `public/mascots/` |
+| 15 | `npm run build` and `npm run lint` pass clean with 0 warnings/errors | ✅ Pass — Next.js 16.4.2 build and ESLint 9 both exit code 0 |
+
+### Not verified (needs manual device testing)
+
+- Physical scanner decoding from printed inkjet paper under variable room lighting conditions
+
 

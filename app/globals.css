@@ -29,6 +29,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Syne';
+  src: url('/fonts/Syne.ttf') format('truetype');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sora';
+  src: url('/fonts/Sora.ttf') format('truetype');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ────────────────────────────────────────────────
    Design tokens — Warm Ivory Paper & Dark Studio Card
    ──────────────────────────────────────────────── */
@@ -148,7 +164,7 @@ body {
   flex-direction: column;
   flex: 1;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0.5rem 1.5rem 3rem;
   gap: 2.5rem;
@@ -461,69 +477,97 @@ body {
 .style-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
+  gap: 0.875rem;
 }
 
 .style-tile {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem;
+  align-items: stretch;
+  gap: 0.5rem;
+  padding: 0.5rem;
   background-color: #FFFFFF;
-  border: 2px solid #E5E0D5;
-  border-radius: 0.75rem;
+  border: 1.5px solid #E5E0D5;
+  border-radius: 0.875rem;
   cursor: pointer;
-  transition: all 0.15s ease;
-  text-align: center;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .style-tile:hover {
-  background-color: #F8F6F0;
-  border-color: #BEB8A8;
+  background-color: #FAF8F5;
+  border-color: #CFC7B7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.08);
 }
 
 .style-tile--active {
   border-color: #2563EB;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 2px #2563EB, 0 8px 24px -4px rgba(37, 99, 235, 0.2);
 }
 
 .style-tile__canvas-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;
-  border-radius: 0.5rem;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.625rem;
   overflow: hidden;
-  background-color: #EFECE3;
+  background-color: #0B0E14;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .style-tile__canvas {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 
 .style-tile__check {
   position: absolute;
-  top: 0.35rem;
-  right: 0.35rem;
-  width: 1.25rem;
-  height: 1.25rem;
+  top: 0.45rem;
+  right: 0.45rem;
+  width: 1.35rem;
+  height: 1.35rem;
   background-color: #2563EB;
   color: #FFFFFF;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 800;
   border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  border: 1.5px solid #FFFFFF;
+}
+
+.style-tile__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.25rem 0.25rem 0.15rem;
+  gap: 0.15rem;
+  width: 100%;
 }
 
 .style-tile__name {
-  font-size: 0.8125rem;
-  font-weight: 600;
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 700;
   color: #18181A;
+  letter-spacing: -0.01em;
+}
+
+.style-tile__desc {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #78716C;
+  line-height: 1.3;
 }
 
 /* Notice Banner */
@@ -555,7 +599,7 @@ body {
   border-radius: 28px;
   padding: 1.75rem 2rem 2.25rem;
   width: 100%;
-  max-width: 820px;
+  max-width: 980px;
   display: flex;
   flex-direction: column;
   align-items: center;

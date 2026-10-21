@@ -26,7 +26,8 @@
     "track": 1,
     "role": "Team Leader",
     "members": 2,
-    "idea": "Decentralised micro-lending for underbanked communities worldwide"
+    "idea": "Decentralised micro-lending for underbanked communities worldwide",
+    "number": 42
   },
   {
     "email": "dave@example.com",

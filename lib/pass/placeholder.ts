@@ -23,6 +23,7 @@ export interface FormValues {
   role?: string;
   ideaTitle: string;
   github: string;
+  number?: number;
 }
 
 /**
@@ -56,5 +57,6 @@ export function resolveParticipantData(
     passId,
     seed,
     mascotId,
+    number: formValues.number,
   };
 }

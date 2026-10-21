@@ -1,343 +1,246 @@
-import { EVENT, TRACKS, TRACK_DETAILS, FONTS, getMascotConfig } from "@/lib/config";
+import { EVENT, TRACKS, FONTS, getMascotConfig } from "@/lib/config";
 import type { ParticipantPassData } from "../types";
 import {
-  fitSingleLineText,
-  wrapAndFitText,
   drawRoundRect,
   hexToRgba,
+  formatTrackAndTeam,
+  drawFooterTrackAndTeam,
+  drawHeroName,
+  wrapAndFitText,
 } from "../utils";
 import { drawMascot } from "../mascotPlaceholder";
-import { drawTrackMark } from "../marks";
-import { drawPassQrCode } from "../qr";
-import {
-  drawContactShadow,
-  applySeededGrain,
-  drawCardEdgeHighlight,
-} from "../grain";
+import { drawContactShadow, applySeededGrain, drawCardEdgeHighlight } from "../grain";
+import { drawMascotWorldPattern } from "../patterns";
+import { drawThemedFoilFrame, drawCollectorHoloEmblem } from "../foil";
 
 /**
- * Collector Style (1080×1350):
- * Metallic foil border, rich top mascot showcase panel, contact shadow,
- * role badge, geometric track mark, scannable QR code, and >=34px text legibility.
+ * Collector Style (Landscape 1920×1080):
+ * Modern digital social share card with a themed foil frame derived from the mascot's theme,
+ * standalone character trading-card panel on the left, high-impact tech display typography (Sora),
+ * glassmorphic building mission container, and clean footer.
  */
 export function renderCollectorStyle(
   ctx: CanvasRenderingContext2D,
-  participant: ParticipantPassData
+  participant: ParticipantPassData,
+  width: number = 1920,
+  height: number = 1080
 ): void {
-  const width = 1080;
-  const height = 1350;
   const mascot = getMascotConfig(participant.mascotId);
   const trackIndex = Math.max(0, Math.min(5, participant.track || 0));
-  const trackInfo = TRACK_DETAILS[trackIndex] || TRACK_DETAILS[0];
-  const roleText = participant.role || "Member";
-  const isLeader = roleText.toLowerCase().includes("leader");
+  const trackName = TRACKS[trackIndex] || "Open Innovation";
 
-  // 1. Background — Dark Metallic Slate
-  ctx.fillStyle = "#0B0E17";
+  const scale = width / 1920;
+
+  ctx.save();
+
+  // 1. Dark Trading-Card Graphite Background
+  ctx.fillStyle = "#0A0D15";
   ctx.fillRect(0, 0, width, height);
 
-  // Gradient Border around card infused with mascot colors
-  const borderGrad = ctx.createLinearGradient(0, 0, width, height);
-  borderGrad.addColorStop(0, mascot.theme.accent);
-  borderGrad.addColorStop(0.3, "#818CF8");
-  borderGrad.addColorStop(0.6, mascot.theme.gradient[1]);
-  borderGrad.addColorStop(1, "#FBBF24");
-
-
-  drawRoundRect(ctx, 36, 36, width - 72, height - 72, 28);
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = borderGrad;
-  ctx.stroke();
-
-  // Edge highlight
-  drawCardEdgeHighlight(ctx, 42, 42, width - 84, height - 84, 24, true);
-
-  // 2. Header
-  const headerY = 96;
-
-  // Event Badge
-  drawRoundRect(ctx, 70, headerY - 24, 250, 48, 24);
-  ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
-  ctx.fill();
-  ctx.lineWidth = 1.5;
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
-  ctx.stroke();
-
-  ctx.fillStyle = "#E2E8F0";
-  ctx.font = `700 18px ${FONTS.monospace}`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(`◆ ${EVENT.badgeText}`, 195, headerY);
-
-  // Role Badge (Leader or Member)
-  const roleX = 335;
-  drawRoundRect(ctx, roleX, headerY - 24, 180, 46, 23);
-  ctx.fillStyle = isLeader
-    ? hexToRgba("#F59E0B", 0.22)
-    : "rgba(255, 255, 255, 0.1)";
-  ctx.fill();
-  ctx.lineWidth = 1;
-  ctx.strokeStyle = isLeader ? "#FBBF24" : "rgba(255, 255, 255, 0.25)";
-  ctx.stroke();
-
-  ctx.fillStyle = isLeader ? "#FDE68A" : "#CBD5E1";
-  ctx.font = `700 16px ${FONTS.sansFacts}`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(
-    `${isLeader ? "★" : "●"} ${roleText.toUpperCase()}`,
-    roleX + 90,
-    headerY
+  // Subtle ambient backdrop glow
+  const bgGlow = ctx.createRadialGradient(
+    width * 0.35,
+    height * 0.5,
+    60 * scale,
+    width * 0.35,
+    height * 0.5,
+    width * 0.7
   );
+  bgGlow.addColorStop(0, hexToRgba(mascot.theme.deeper, 0.28));
+  bgGlow.addColorStop(0.5, hexToRgba(mascot.theme.gradient[1], 0.12));
+  bgGlow.addColorStop(1, "rgba(10, 13, 21, 0)");
+  ctx.fillStyle = bgGlow;
+  ctx.fillRect(0, 0, width, height);
 
-  // Collector Serial / Pass ID (Right)
-  ctx.textAlign = "right";
-  ctx.font = `700 22px ${FONTS.monospace}`;
-  ctx.fillStyle = "#FBBF24"; // Gold
-  ctx.fillText(`NO. ${participant.passId}`, 1010, headerY);
-
-  // 3. Coloured Mascot Panel Across the Top (x = 70, y = 145, w = 940, h = 520)
-  const panelX = 70;
-  const panelY = 145;
-  const panelW = 940;
-  const panelH = 520;
-
-  const panelGrad = ctx.createLinearGradient(panelX, panelY, panelX, panelY + panelH);
-  panelGrad.addColorStop(0, mascot.theme.collectorPanel[0]);
-  panelGrad.addColorStop(1, mascot.theme.collectorPanel[1]);
-
-  drawRoundRect(ctx, panelX, panelY, panelW, panelH, 24);
-  ctx.fillStyle = panelGrad;
-  ctx.fill();
-
-  // Multi-stop radial backlight aura inside panel ensuring > 3:1 separation
-  const glowCenterX = panelX + panelW / 2;
-  const glowCenterY = panelY + panelH / 2;
-  const panelGlow = ctx.createRadialGradient(
-    glowCenterX,
-    glowCenterY - 20,
-    30,
-    glowCenterX,
-    glowCenterY - 20,
-    280
-  );
-  panelGlow.addColorStop(0, hexToRgba(mascot.theme.glow, 0.45));
-  panelGlow.addColorStop(0.5, hexToRgba(mascot.theme.accent, 0.22));
-  panelGlow.addColorStop(1, "rgba(0, 0, 0, 0)");
-  ctx.fillStyle = panelGlow;
-  ctx.fillRect(panelX, panelY, panelW, panelH);
-
-  ctx.lineWidth = 2.5;
-  ctx.strokeStyle = hexToRgba(mascot.theme.accent, 0.55);
-  ctx.stroke();
-
-  // Draw Mascot Series badge on top panel
-  const mascotBadgeText = `SERIES · ${mascot.name.toUpperCase()}`;
-  drawRoundRect(ctx, panelX + 24, panelY + 20, 260, 38, 19);
-  ctx.fillStyle = "rgba(0, 0, 0, 0.65)";
-  ctx.fill();
-  ctx.lineWidth = 1;
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
-  ctx.stroke();
-
-  ctx.fillStyle = mascot.theme.glow;
-  ctx.font = `700 16px ${FONTS.monospace}`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(mascotBadgeText, panelX + 24 + 130, panelY + 39);
-
-  // Soft contact shadow under the mascot inside top panel
-  drawContactShadow(
+  // Outer perimeter foil accent frame
+  drawThemedFoilFrame(
     ctx,
-    panelX + panelW / 2,
-    panelY + panelH - 24,
-    440,
-    30,
-    0.5
+    24 * scale,
+    24 * scale,
+    width - 48 * scale,
+    height - 48 * scale,
+    24 * scale,
+    Math.max(2, 3.5 * scale),
+    participant.mascotId,
+    participant.seed
   );
 
-  // Full body Mascot inside top panel
-  const mascotBoxSize = 480;
+  drawCardEdgeHighlight(ctx, 24 * scale, 24 * scale, width - 48 * scale, height - 48 * scale, 20 * scale, true);
+
+  // 2. Standalone Character Trading-Card Panel on the Left
+  const cardX = Math.round(64 * scale);
+  const cardY = Math.round(64 * scale);
+  const cardW = Math.round(710 * scale);
+  const cardH = Math.round(952 * scale);
+  const cardR = Math.round(32 * scale);
+
+  // Card panel background (dark glass container)
+  drawRoundRect(ctx, cardX, cardY, cardW, cardH, cardR);
+  ctx.fillStyle = "rgba(13, 17, 28, 0.96)";
+  ctx.fill();
+
+  // Signature Mascot World Pattern inside trading card panel
+  drawMascotWorldPattern(ctx, participant.mascotId, participant.seed, cardX, cardY, cardW, cardH, {
+    opacity: 0.16,
+    color: mascot.theme.glow,
+  });
+
+  // Themed Foil Frame around character panel (colors from mascot theme)
+  drawThemedFoilFrame(
+    ctx,
+    cardX,
+    cardY,
+    cardW,
+    cardH,
+    cardR,
+    Math.max(3, 4.5 * scale),
+    participant.mascotId,
+    participant.seed
+  );
+
+  // Trading card header inside panel: "BUILDER" badge + Holographic Diamond Emblem
+  const cardHeaderY = cardY + Math.round(48 * scale);
+  drawRoundRect(ctx, cardX + 32 * scale, cardHeaderY - 20 * scale, 136 * scale, 42 * scale, 21 * scale);
+  ctx.fillStyle = "rgba(10, 14, 22, 0.85)";
+  ctx.fill();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
+  ctx.stroke();
+
+  ctx.fillStyle = "#FFFFFF";
+  ctx.font = `800 ${Math.round(15 * scale)}px ${FONTS.techCollector}`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("BUILDER", cardX + 100 * scale, cardHeaderY);
+
+  // Holographic Diamond Emblem in top-right of trading card
+  drawCollectorHoloEmblem(ctx, cardX + cardW - 52 * scale, cardHeaderY, 20 * scale, participant.mascotId, participant.seed);
+
+  // Character inside trading card
+  const mascotBoxX = cardX + Math.round(24 * scale);
+  const mascotBoxY = cardY + Math.round(88 * scale);
+  const mascotBoxW = cardW - Math.round(48 * scale);
+  const mascotBoxH = cardH - Math.round(190 * scale);
+  const baselineY = cardY + cardH - Math.round(90 * scale);
+
+  // Grounding contact shadow
+  drawContactShadow(ctx, cardX + cardW / 2, baselineY, cardW * 0.65, Math.round(30 * scale), 0.5);
+
   drawMascot(
     ctx,
-    {
-      x: panelX + (panelW - mascotBoxSize) / 2,
-      y: panelY + 20,
-      width: mascotBoxSize,
-      height: mascotBoxSize,
-    },
+    { x: mascotBoxX, y: mascotBoxY, width: mascotBoxW, height: mascotBoxH },
     participant,
     "collector",
     "full"
   );
 
-  // 4. Participant Name Underneath Panel (x = 70, y = 685)
-  const nameX = 70;
-  const nameMaxW = 940;
-  const fittedName = fitSingleLineText(
-    ctx,
-    participant.name,
-    nameMaxW,
-    64,
-    38,
-    FONTS.serifDisplay,
-    "700"
-  );
-
+  // Bottom banner inside trading card: Mascot Name & Tagline
+  const cardFooterY = cardY + cardH - Math.round(46 * scale);
   ctx.fillStyle = "#FFFFFF";
-  ctx.font = `700 ${fittedName.fontSize}px ${FONTS.serifDisplay}`;
-  ctx.textAlign = "left";
-  ctx.textBaseline = "top";
-  ctx.fillText(fittedName.text, nameX, 680);
-
-  let nextY = 680 + fittedName.fontSize + 8;
-
-  // Print mascot tagline under the name
-  ctx.fillStyle = mascot.theme.glow;
-  ctx.font = `700 18px ${FONTS.monospace}`;
-  ctx.fillText(`MASCOT: ${mascot.name.toUpperCase()} — "${mascot.tagline}"`, nameX, nextY);
-  nextY += 32;
-
-
-  // 5. Idea Title (>= 34px)
-  if (participant.ideaTitle) {
-    ctx.fillStyle = "#E2E8F0";
-    const ideaFont = `italic 35px ${FONTS.serifDisplay}`;
-    const ideaLines = wrapAndFitText(
-      ctx,
-      `“${participant.ideaTitle}”`,
-      nameMaxW,
-      2,
-      ideaFont
-    );
-
-    ctx.font = ideaFont;
-    ctx.textBaseline = "top";
-    ideaLines.forEach((l, idx) => {
-      ctx.fillText(l, nameX, nextY + idx * 46);
-    });
-    nextY += ideaLines.length * 46 + 10;
-  }
-
-  // 6. Section Divider
-  const divY = Math.max(820, nextY + 10);
-  ctx.beginPath();
-  ctx.moveTo(70, divY);
-  ctx.lineTo(1010, divY);
-  ctx.lineWidth = 1;
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
-  ctx.stroke();
-
-  // 7. Metadata Details & Scannable QR Code
-  const factsY = divY + 30;
-  const colW = 540;
-
-  // Track (with geometric mark)
-  drawTrackMark(
-    ctx,
-    trackInfo.mark,
-    nameX,
-    factsY + 34,
-    42,
-    mascot.theme.accent
-  );
-
-  ctx.fillStyle = "#94A3B8";
-  ctx.font = `700 16px ${FONTS.monospace}`;
-  ctx.fillText("TRACK", nameX + 54, factsY);
-
-  const trackName = TRACKS[trackIndex] || "Open Innovation";
-  const fittedTrack = fitSingleLineText(
-    ctx,
-    trackName,
-    colW - 54,
-    36,
-    34,
-    FONTS.sansFacts,
-    "700"
-  );
-  ctx.fillStyle = "#F8FAFC";
-  ctx.font = `700 ${fittedTrack.fontSize}px ${FONTS.sansFacts}`;
-  ctx.fillText(fittedTrack.text, nameX + 54, factsY + 32);
-
-  // Team
-  const teamY = factsY + 110;
-  ctx.fillStyle = "#94A3B8";
-  ctx.font = `700 16px ${FONTS.monospace}`;
-  ctx.fillText("TEAM", nameX, teamY);
-
-  const teamText = `${participant.team} · ${participant.teamId}`;
-  const fittedTeam = fitSingleLineText(
-    ctx,
-    teamText,
-    colW,
-    36,
-    34,
-    FONTS.sansFacts,
-    "700"
-  );
-  ctx.fillStyle = "#F8FAFC";
-  ctx.font = `700 ${fittedTeam.fontSize}px ${FONTS.sansFacts}`;
-  ctx.fillText(fittedTeam.text, nameX, teamY + 28);
-
-  // Builder handle
-  const builderY = teamY + 105;
-  ctx.fillStyle = "#94A3B8";
-  ctx.font = `700 16px ${FONTS.monospace}`;
-  ctx.fillText("BUILDER", nameX, builderY);
-
-  const handleText = participant.github
-    ? `@${participant.github}`
-    : "Verified Pass";
-  const fittedHandle = fitSingleLineText(
-    ctx,
-    handleText,
-    colW,
-    36,
-    34,
-    FONTS.sansFacts,
-    "700"
-  );
-  ctx.fillStyle = "#F8FAFC";
-  ctx.font = `700 ${fittedHandle.fontSize}px ${FONTS.sansFacts}`;
-  ctx.fillText(fittedHandle.text, nameX, builderY + 28);
-
-  // Scannable QR Code on the right side
-  const qrX = 770;
-  const qrY = factsY + 10;
-  const qrSize = 240;
-
-  drawPassQrCode(ctx, participant.passId, qrX, qrY, qrSize, {
-    darkColor: "#0B0E17",
-    lightColor: "#FFFFFF",
-    borderRadius: 12,
-    quietZoneModules: 3,
-  });
-
-  // QR Label below code
-  ctx.fillStyle = "#94A3B8";
-  ctx.font = `700 16px ${FONTS.monospace}`;
-  ctx.textAlign = "center";
-  ctx.fillText("SCAN TO VERIFY PASS", qrX + qrSize / 2, qrY + qrSize + 28);
-
-  // 8. Bottom Footer
-  const footerY = 1270;
-  ctx.beginPath();
-  ctx.moveTo(70, footerY - 30);
-  ctx.lineTo(1010, footerY - 30);
-  ctx.lineWidth = 1;
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
-  ctx.stroke();
-
-  ctx.fillStyle = "#94A3B8";
-  ctx.font = `600 20px ${FONTS.monospace}`;
+  ctx.font = `800 ${Math.round(38 * scale)}px ${FONTS.techCollector}`;
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
-  ctx.fillText(EVENT.siteUrl, 70, footerY);
+  ctx.fillText(mascot.name, cardX + 36 * scale, cardFooterY);
 
+  ctx.fillStyle = "#94A3B8";
+  ctx.font = `600 ${Math.round(22 * scale)}px ${FONTS.sansFacts}`;
   ctx.textAlign = "right";
-  ctx.fillText(EVENT.dates, 1010, footerY);
+  ctx.fillText(mascot.tagline, cardX + cardW - 36 * scale, cardFooterY);
+
+  // 3. Right Hero Content Column
+  const infoX = Math.round(850 * scale);
+  const infoW = width - infoX - Math.round(70 * scale);
+
+  // Event Header
+  const headerY = Math.round(110 * scale);
+  ctx.fillStyle = "#FFFFFF";
+  ctx.font = `800 ${Math.round(28 * scale)}px ${FONTS.techCollector}`;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+  ctx.fillText(`✱ ${EVENT.badgeText}`, infoX, headerY);
+
+  ctx.fillStyle = "#94A3B8";
+  ctx.font = `600 ${Math.round(20 * scale)}px ${FONTS.sansFacts}`;
+  ctx.fillText(`${EVENT.name} • by NexWin`, infoX, headerY + Math.round(38 * scale));
+
+  // Hero Participant Name (Sora)
+  const nameStartY = Math.round(270 * scale);
+  drawHeroName(
+    ctx,
+    participant.name,
+    infoX,
+    nameStartY,
+    infoW,
+    Math.round(260 * scale),
+    FONTS.techCollector,
+    "#FFFFFF",
+    "800",
+    false
+  );
+
+  // Building Card Container
+  const boxY = Math.round(600 * scale);
+  const boxW = infoW;
+  const boxH = Math.round(168 * scale);
+  const boxR = Math.round(24 * scale);
+
+  drawRoundRect(ctx, infoX, boxY, boxW, boxH, boxR);
+  ctx.fillStyle = "rgba(16, 24, 39, 0.78)";
+  ctx.fill();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+  ctx.stroke();
+
+  // Building Label
+  ctx.fillStyle = "#38BDF8";
+  ctx.font = `800 ${Math.round(16 * scale)}px ${FONTS.techCollector}`;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+  ctx.fillText("BUILDING", infoX + Math.round(36 * scale), boxY + Math.round(28 * scale));
+
+  // Idea Title
+  const ideaText = participant.ideaTitle || "Building the Future of Tech";
+  const ideaFontSize = Math.round(34 * scale);
+  const ideaFont = `600 ${ideaFontSize}px ${FONTS.sansFacts}`;
+  const ideaLines = wrapAndFitText(ctx, ideaText, boxW - Math.round(72 * scale), 2, ideaFont);
+
+  ctx.fillStyle = "#F8FAFC";
+  ctx.font = ideaFont;
+  ideaLines.forEach((line, idx) => {
+    ctx.fillText(
+      line,
+      infoX + Math.round(36 * scale),
+      boxY + Math.round(66 * scale) + idx * Math.round(44 * scale)
+    );
+  });
+
+  // 4. Bottom Footer
+  const footerY = Math.round(965 * scale);
+
+  // Left: Event Site Link
+  ctx.fillStyle = "#38BDF8";
+  ctx.font = `700 ${Math.round(24 * scale)}px ${FONTS.techCollector}`;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  ctx.fillText(`${EVENT.siteUrl.replace(/^https?:\/\//, "")} ↗`, infoX, footerY);
+
+  // Right: Track and Team (dynamically sized and formatted, never overlaps)
+  const trackTeamText = formatTrackAndTeam(trackName, trackIndex, participant.team);
+  const rightX = width - Math.round(70 * scale);
+  const availableTrackW = rightX - (infoX + Math.round(360 * scale));
+  drawFooterTrackAndTeam(
+    ctx,
+    trackTeamText,
+    rightX,
+    footerY,
+    availableTrackW,
+    FONTS.techCollector,
+    "#94A3B8",
+    scale
+  );
 
   // Seeded grain across the card
   applySeededGrain(ctx, participant.seed, width, height, "overlay");
+
+  ctx.restore();
 }

@@ -13,6 +13,7 @@ export interface ParticipantPassData {
   passId: string;
   seed: number;
   mascotId: MascotId;
+  number?: number;
 }
 
 export interface MascotBox {
@@ -29,10 +30,10 @@ export interface StyleOption {
 }
 
 export const STYLE_OPTIONS: readonly StyleOption[] = [
-  { key: "editorial", label: "Editorial", description: "Warm paper & serif elegance" },
-  { key: "night", label: "Night", description: "Obsidian glow & pixel constellation" },
-  { key: "pop", label: "Pop", description: "Vibrant yellow & bold sticker energy" },
-  { key: "collector", label: "Collector", description: "Gradient foil & metallic top badge" },
+  { key: "editorial", label: "Editorial", description: "Warm ivory paper & arch portal" },
+  { key: "night", label: "Night", description: "Obsidian stage & luminous glow" },
+  { key: "pop", label: "Pop", description: "Comic poster & starburst badge" },
+  { key: "collector", label: "Collector", description: "Trading card & themed foil frame" },
 ] as const;
 
 export type { SizeKey };

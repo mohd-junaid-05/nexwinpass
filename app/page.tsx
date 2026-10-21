@@ -67,6 +67,7 @@ interface LookupResult {
   role: string;
   members: number;
   idea: string;
+  number?: number;
 }
 
 /* ────────────────────────────────────────────────
@@ -172,6 +173,7 @@ export default function StudioPage() {
       role: lookupResult?.role || "Team Leader",
       ideaTitle,
       github,
+      number: lookupResult?.number,
     },
     unlockedEmail,
     selectedMascot
@@ -180,6 +182,12 @@ export default function StudioPage() {
   /* ──────────── Eager Mascot Image Preloading ──────────── */
 
   useEffect(() => {
+    ensureMascotLoaded(selectedMascot, "full", "small").then(() => {
+      setMascotVersion((v) => v + 1);
+    });
+    ensureMascotLoaded(selectedMascot, "full", "large").then(() => {
+      setMascotVersion((v) => v + 1);
+    });
     preloadAllMascotsIdle();
 
     // Listen for image load failures to gracefully notify the user
@@ -190,7 +198,7 @@ export default function StudioPage() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [selectedMascot]);
 
 
   /* ──────────── Canvas Rendering ──────────── */
@@ -212,20 +220,17 @@ export default function StudioPage() {
       }
     }
 
-    // 2. Draw all 4 style thumbnails (base pass 1080×1350 scaled to 540×675)
+    // 2. Draw all 4 style thumbnails (landscape base pass 1920×1080 rendered to 480×270)
     for (const opt of STYLE_OPTIONS) {
       const thumbCanvas = thumbRefs.current[opt.key];
       if (thumbCanvas) {
-        if (thumbCanvas.width !== 540 || thumbCanvas.height !== 675) {
-          thumbCanvas.width = 540;
-          thumbCanvas.height = 675;
+        if (thumbCanvas.width !== 480 || thumbCanvas.height !== 270) {
+          thumbCanvas.width = 480;
+          thumbCanvas.height = 270;
         }
         const thumbCtx = thumbCanvas.getContext("2d");
         if (thumbCtx) {
-          thumbCtx.save();
-          thumbCtx.scale(0.5, 0.5);
-          renderBasePass(thumbCtx, participantData, opt.key);
-          thumbCtx.restore();
+          renderBasePass(thumbCtx, participantData, opt.key, 480, 270);
         }
       }
     }
@@ -927,8 +932,8 @@ export default function StudioPage() {
                           thumbRefs.current[opt.key] = el;
                         }}
                         className="style-tile__canvas"
-                        width={540}
-                        height={675}
+                        width={480}
+                        height={270}
                         aria-hidden="true"
                       />
                       {isSelected && (
@@ -937,7 +942,10 @@ export default function StudioPage() {
                         </div>
                       )}
                     </div>
-                    <span className="style-tile__name">{opt.label}</span>
+                    <div className="style-tile__info">
+                      <span className="style-tile__name">{opt.label}</span>
+                      <span className="style-tile__desc">{opt.description}</span>
+                    </div>
                   </button>
                 );
               })}

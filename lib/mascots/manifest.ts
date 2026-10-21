@@ -12,6 +12,10 @@ export interface MascotTheme {
   gradient: [string, string];
   popBg: string;
   collectorPanel: [string, string];
+  base?: string;
+  deep?: string;
+  highlight?: string;
+  secondary?: string;
 }
 
 export interface MascotImages {

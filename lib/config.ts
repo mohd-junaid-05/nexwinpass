@@ -33,7 +33,7 @@ export const TRACK_DETAILS = [
 export type TrackMarkShape = (typeof TRACK_DETAILS)[number]["mark"];
 
 export const SIZES = {
-  pass: { width: 1080, height: 1350, label: "The pass" },
+  pass: { width: 1920, height: 1080, label: "The pass" },
   square: { width: 1080, height: 1080, label: "Square" },
   link: { width: 1200, height: 630, label: "Link" },
   story: { width: 1080, height: 1920, label: "Story" },
@@ -50,9 +50,9 @@ export const SAFE_ZONES = {
   pass: {
     top: 50,
     bottom: 50,
-    left: 50,
-    right: 50,
-    note: "Standard card bleed margin; preserves decorative border and print safety",
+    left: 60,
+    right: 60,
+    note: "Landscape pass 1920×1080 card bleed margin; preserves decorative border and print safety",
   },
   square: {
     top: 60,
@@ -94,6 +94,10 @@ export const FONTS = {
     "'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Arabic', system-ui, -apple-system, sans-serif",
   condensedPop:
     "'Anton', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Arabic', Impact, sans-serif",
+  wideNight:
+    "'Syne', 'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', system-ui, sans-serif",
+  techCollector:
+    "'Sora', 'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', system-ui, sans-serif",
   monospace:
     "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
 } as const;
