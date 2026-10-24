@@ -120,8 +120,8 @@ export const CERTIFICATE_TEMPLATES: Record<CertificateType, CertificateTemplate>
       {
         id: "comp-name",
         dataKey: "name",
-        box: { x: 80, y: 712, width: 1150, height: 105 },
-        mask: { sliceY: 700, sliceHeight: 4 },
+        box: { x: 80, y: 675, width: 1150, height: 140 },
+        mask: { sliceY: 645, sliceHeight: 4 },
         align: "left",
         fontFamily: FONTS.certificateBrush,
         weight: "normal",
@@ -135,8 +135,8 @@ export const CERTIFICATE_TEMPLATES: Record<CertificateType, CertificateTemplate>
       {
         id: "comp-body",
         dataKey: "body",
-        box: { x: 80, y: 845, width: 1335, height: 175 },
-        mask: { sliceY: 835, sliceHeight: 4 },
+        box: { x: 80, y: 835, width: 1335, height: 180 },
+        mask: { sliceY: 825, sliceHeight: 4 },
         align: "left",
         fontFamily: FONTS.sansFacts,
         weight: "500",

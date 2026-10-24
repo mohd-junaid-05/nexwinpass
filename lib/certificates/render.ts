@@ -66,7 +66,7 @@ export function resolveFieldValue(
       const trackName = detail ? detail.name : "Hackathon Track";
       if (template.id === "completion") {
         const project = (data.projectName || "").trim() || "their project";
-        text = `"for completing all project milestones in NEXWIN 2026 by building and presenting '${project}' with team ${data.team} (${trackName})."`;
+        text = `for completing all project milestones in NEXWIN 2026 by building and presenting '${project}' with team ${data.team} (${trackName}).`;
       } else {
         const roleWord =
           data.role && data.role.toLowerCase().includes("leader")
