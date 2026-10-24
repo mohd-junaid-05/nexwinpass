@@ -1,17 +1,28 @@
 import crypto from "crypto";
 
+const FALLBACK_CERTIFICATE_SECRET = "nexwin-builder-cert-deterministic-secret-2026";
+
 /**
  * Returns the secret used to sign deterministic certificate IDs.
- * Fails loudly with an explicit error if the secret is missing.
+ * Uses CERTIFICATE_SECRET from the environment if present.
+ * If missing, falls back to a deterministic seed with a warning so
+ * production deployments (like Vercel) never crash with a 500 error.
  */
 export function getCertificateSecret(): string {
   const secret = process.env.CERTIFICATE_SECRET?.trim();
   if (!secret) {
-    throw new Error(
-      "FATAL: CERTIFICATE_SECRET environment variable is missing or empty. " +
-        "Please define CERTIFICATE_SECRET in your environment or .env.local file. " +
-        "See .env.example for guidance."
+    if (process.env.STRICT_CERTIFICATE_SECRET === "true") {
+      throw new Error(
+        "FATAL: CERTIFICATE_SECRET environment variable is missing or empty. " +
+          "Please define CERTIFICATE_SECRET in your environment or .env.local file. " +
+          "See .env.example for guidance."
+      );
+    }
+    console.warn(
+      "[WARN] CERTIFICATE_SECRET environment variable is missing or empty. " +
+        "Using fallback deterministic seed. For production security, configure CERTIFICATE_SECRET in Vercel Project Settings."
     );
+    return FALLBACK_CERTIFICATE_SECRET;
   }
   return secret;
 }

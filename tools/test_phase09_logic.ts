@@ -42,8 +42,13 @@ assert.strictEqual(
 );
 console.log("✓ Filename sanitization tests passed.");
 
-// 3. Test Loud Failure on missing secret
+// 3. Test Graceful Fallback on missing secret & Strict Mode
 delete process.env.CERTIFICATE_SECRET;
+const fallbackId = generateCertificateId("participation", p1);
+assert.ok(fallbackId.startsWith("NW-PART-"), "Fallback ID generated gracefully without crashing");
+
+// In strict mode, verify loud failure
+process.env.STRICT_CERTIFICATE_SECRET = "true";
 let failedLoudly = false;
 try {
   generateCertificateId("participation", p1);
@@ -52,8 +57,9 @@ try {
     failedLoudly = true;
   }
 }
-assert.strictEqual(failedLoudly, true, "App must fail loudly if secret is missing");
-console.log("✓ Missing secret loud failure test passed.");
+delete process.env.STRICT_CERTIFICATE_SECRET;
+assert.strictEqual(failedLoudly, true, "App must fail loudly if secret is missing in strict mode");
+console.log("✓ Fallback behavior and strict missing secret tests passed.");
 
 // 4. Test Template Configs
 assert.ok(CERTIFICATE_TEMPLATES.participation, "Participation template exists");
