@@ -45,6 +45,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Lost in South';
+  src: url('/fonts/LostInSouth.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ────────────────────────────────────────────────
    Design Tokens — NEXWIN Brand Identity
    Dark only. Sampled & tuned from NEXWIN logo:
@@ -971,6 +979,360 @@ body {
 }
 
 /* ────────────────────────────────────────────────
+   Studio Tab Navigation (Pass vs Certificates)
+   ──────────────────────────────────────────────── */
+
+.studio-tab-nav {
+  display: flex;
+  justify-content: center;
+  padding: 1.25rem 1rem 0;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8, 12, 9, 0.7);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.studio-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--surface);
+  padding: 0.35rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.studio-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.studio-tab:hover {
+  color: var(--foreground);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.studio-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.studio-tab--active {
+  color: #080C09;
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.studio-tab--active:hover {
+  color: #080C09;
+  background: var(--accent-hover);
+}
+
+.studio-tab__icon {
+  font-size: 1rem;
+}
+
+.studio-tabpanel {
+  display: block;
+}
+
+.studio-tabpanel--hidden {
+  display: none !important;
+}
+
+/* ────────────────────────────────────────────────
+   Certificates Studio Panel
+   ──────────────────────────────────────────────── */
+
+.certificates-panel {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.certificates-lookup-wrapper {
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+}
+
+.certificates-lookup-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.cert-global-notice {
+  max-width: 640px;
+  margin: 0 auto 2rem;
+}
+
+.cert-dev-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0 auto 2rem;
+  padding: 0.6rem 1.25rem;
+  background: rgba(255, 0, 127, 0.1);
+  border: 1px dashed rgba(255, 0, 127, 0.5);
+  border-radius: 9999px;
+  max-width: fit-content;
+}
+
+.cert-dev-badge {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.5rem;
+  background: #FF007F;
+  color: #FFFFFF;
+  border-radius: 4px;
+}
+
+.cert-dev-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: #FFB3D9;
+  cursor: pointer;
+}
+
+.cert-dev-toggle input[type="checkbox"] {
+  accent-color: #FF007F;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+/* ────────────────────────────────────────────────
+   Two Certificate Cards Grid
+   ──────────────────────────────────────────────── */
+
+.certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  align-items: stretch;
+}
+
+@media (max-width: 960px) {
+  .certificates-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.certificate-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.certificate-card:hover {
+  border-color: var(--border-light);
+}
+
+.certificate-card__header {
+  margin-bottom: 1.25rem;
+}
+
+.certificate-card__tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cert-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.cert-badge--participation {
+  background: rgba(0, 229, 255, 0.15);
+  color: #00E5FF;
+  border: 1px solid rgba(0, 229, 255, 0.4);
+}
+
+.cert-badge--completion {
+  background: rgba(0, 255, 136, 0.15);
+  color: #00FF88;
+  border: 1px solid rgba(0, 255, 136, 0.4);
+}
+
+.cert-id-tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #00E5FF;
+  background: rgba(0, 229, 255, 0.08);
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  letter-spacing: 0.04em;
+}
+
+.cert-id-tag--completion {
+  color: #00FF88;
+  background: rgba(0, 255, 136, 0.08);
+  border-color: rgba(0, 255, 136, 0.25);
+}
+
+.certificate-card__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 0.4rem;
+  line-height: 1.25;
+}
+
+.certificate-card__desc {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.certificate-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.certificate-preview-stage {
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.certificate-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ────────────────────────────────────────────────
+   Ineligible & Locked Explanation State Cards
+   ──────────────────────────────────────────────── */
+
+.certificate-state-card {
+  flex: 1;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px dashed var(--border-dashed);
+}
+
+.certificate-state-card--locked {
+  background: rgba(14, 22, 17, 0.5);
+}
+
+.certificate-state-card--ineligible {
+  background: rgba(14, 22, 17, 0.7);
+  border-color: var(--border-light);
+}
+
+.cert-state-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.cert-state-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0 0 0.5rem;
+}
+
+.cert-state-desc {
+  font-size: 0.875rem;
+  color: var(--muted);
+  max-width: 420px;
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+.cert-state-help {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  width: 100%;
+  max-width: 380px;
+  font-size: 0.8125rem;
+  color: var(--muted-dark);
+}
+
+.cert-state-help p {
+  margin: 0 0 0.4rem;
+}
+
+.cert-support-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.cert-support-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+.certificate-card__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.certificate-card__actions .btn {
+  flex: 1;
+  min-width: 140px;
+  justify-content: center;
+}
+
+/* ────────────────────────────────────────────────
    Studio Footer
    ──────────────────────────────────────────────── */
 
@@ -1003,3 +1365,4 @@ body {
     border-style: dotted !important;
   }
 }
+

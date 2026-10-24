@@ -6,7 +6,9 @@
     "teamId": "DC-001",
     "track": 2,
     "role": "Team Leader",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": true
   },
   {
     "email": "yassertaha.ymt@gmail.com",
@@ -15,7 +17,9 @@
     "teamId": "DC-001",
     "track": 2,
     "role": "Member",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": false
   },
   {
     "email": "shaikaslam2602@gmail.com",
@@ -24,7 +28,20 @@
     "teamId": "DC-001",
     "track": 2,
     "role": "Member",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": false
+  },
+  {
+    "email": "carol.longname@example.com",
+    "name": "Carol Johansson-Aleksandrović-Worthington",
+    "team": "Quantum Architects",
+    "teamId": "QA-005",
+    "track": 3,
+    "role": "Team Leader",
+    "members": 3,
+    "participation": true,
+    "completion": true
   },
   {
     "email": "mohammedayaana588@gmail.com",
@@ -33,7 +50,9 @@
     "teamId": "IN-002",
     "track": 1,
     "role": "Team Leader",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": true
   },
   {
     "email": "haroonakram2509@gmail.com",
@@ -42,7 +61,9 @@
     "teamId": "IN-002",
     "track": 1,
     "role": "Member",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": true
   },
   {
     "email": "najah.n0621@gmail.com",
@@ -51,7 +72,9 @@
     "teamId": "IN-002",
     "track": 1,
     "role": "Member",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": true
   },
   {
     "email": "mohdmaqsood367@gmail.com",
@@ -60,7 +83,9 @@
     "teamId": "CC-003",
     "track": 1,
     "role": "Team Leader",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": true
   },
   {
     "email": "saniyaanwarrr@gmail.com",
@@ -69,7 +94,9 @@
     "teamId": "CC-003",
     "track": 1,
     "role": "Member",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": false
   },
   {
     "email": "hubajabeen910@gmail.com",
@@ -78,7 +105,9 @@
     "teamId": "CC-003",
     "track": 1,
     "role": "Member",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": true
   },
   {
     "email": "saadhyd1234@gmail.com",
@@ -87,7 +116,9 @@
     "teamId": "NX-004",
     "track": 2,
     "role": "Team Leader",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": true
   },
   {
     "email": "nailaurooj05@gmail.com",
@@ -96,7 +127,9 @@
     "teamId": "NX-004",
     "track": 2,
     "role": "Member",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": true
   },
   {
     "email": "prachijadhav2817@gmail.com",
@@ -105,6 +138,8 @@
     "teamId": "NX-004",
     "track": 2,
     "role": "Member",
-    "members": 3
+    "members": 3,
+    "participation": true,
+    "completion": true
   }
 ]

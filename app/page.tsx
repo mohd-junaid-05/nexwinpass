@@ -37,6 +37,11 @@ import {
   addMascotImageErrorListener,
   ensureMascotLoaded,
 } from "@/lib/mascotImage";
+import {
+  IS_CERTIFICATES_ENABLED,
+  IS_REQUIRE_TEAM_ID_ENABLED,
+} from "@/lib/certificates";
+import CertificatesPanel from "./components/CertificatesPanel";
 
 
 /* ────────────────────────────────────────────────
@@ -68,6 +73,16 @@ interface LookupResult {
   members: number;
   idea: string;
   number?: number;
+  certificates?: {
+    participation: {
+      eligible: boolean;
+      id: string | null;
+    };
+    completion: {
+      eligible: boolean;
+      id: string | null;
+    };
+  };
 }
 
 /* ────────────────────────────────────────────────
@@ -103,8 +118,12 @@ function getServerCanShareSnapshot(): boolean {
    ──────────────────────────────────────────────── */
 
 export default function StudioPage() {
+  // Top-level tab navigation
+  const [activeTab, setActiveTab] = useState<"pass" | "certificates">("pass");
+
   // Lookup state
   const [email, setEmail] = useState("");
+  const [teamIdInput, setTeamIdInput] = useState("");
   const [status, setStatus] = useState<LookupStatus>("idle");
   const [lookupResult, setLookupResult] = useState<LookupResult | null>(null);
 
@@ -271,10 +290,15 @@ export default function StudioPage() {
       setStatus("loading");
 
       try {
+        const payload: { email: string; teamId?: string } = { email: trimmed };
+        if (IS_REQUIRE_TEAM_ID_ENABLED && teamIdInput.trim()) {
+          payload.teamId = teamIdInput.trim();
+        }
+
         const res = await fetch("/api/lookup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: trimmed }),
+          body: JSON.stringify(payload),
         });
 
         if (res.status === 429) {
@@ -304,7 +328,7 @@ export default function StudioPage() {
         setStatus("error");
       }
     },
-    [email]
+    [email, teamIdInput]
   );
 
   /* ──────────── Email change handler ──────────── */
@@ -660,12 +684,63 @@ export default function StudioPage() {
         </div>
       </header>
 
-      <div className="studio-body">
-        {/* ─── Form panel ─── */}
-        <section
-          className="studio-form-panel"
-          aria-label="Pass customisation form"
-        >
+      {/* Tab Navigation (Pass vs Certificates) — only rendered when enabled */}
+      {IS_CERTIFICATES_ENABLED && (
+        <nav className="studio-tab-nav" aria-label="Studio views">
+          <div role="tablist" className="studio-tabs">
+            <button
+              id="tab-pass"
+              role="tab"
+              type="button"
+              className={`studio-tab ${activeTab === "pass" ? "studio-tab--active" : ""}`}
+              aria-selected={activeTab === "pass"}
+              aria-controls="panel-pass"
+              tabIndex={activeTab === "pass" ? 0 : -1}
+              onClick={() => setActiveTab("pass")}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowRight") setActiveTab("certificates");
+              }}
+            >
+              <span className="studio-tab__icon" aria-hidden="true">
+                🎟️
+              </span>
+              <span>Builder Pass</span>
+            </button>
+            <button
+              id="tab-certificates"
+              role="tab"
+              type="button"
+              className={`studio-tab ${activeTab === "certificates" ? "studio-tab--active" : ""}`}
+              aria-selected={activeTab === "certificates"}
+              aria-controls="panel-certificates"
+              tabIndex={activeTab === "certificates" ? 0 : -1}
+              onClick={() => setActiveTab("certificates")}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowLeft") setActiveTab("pass");
+              }}
+            >
+              <span className="studio-tab__icon" aria-hidden="true">
+                📜
+              </span>
+              <span>Certificates</span>
+            </button>
+          </div>
+        </nav>
+      )}
+
+      {/* Tab Panel 1: Pass */}
+      <div
+        id="panel-pass"
+        role="tabpanel"
+        aria-labelledby="tab-pass"
+        className={`studio-tabpanel ${activeTab === "pass" ? "studio-tabpanel--active" : "studio-tabpanel--hidden"}`}
+      >
+        <div className="studio-body">
+          {/* ─── Form panel ─── */}
+          <section
+            className="studio-form-panel"
+            aria-label="Pass customisation form"
+          >
           {/* Hero title */}
           <div className="studio-hero">
             <h1 className="studio-hero__title">
@@ -712,6 +787,23 @@ export default function StudioPage() {
                 </button>
               </div>
             </div>
+
+            {/* Optional second verification check: Team ID */}
+            {IS_REQUIRE_TEAM_ID_ENABLED && (
+              <div className="field">
+                <label htmlFor="lookup-teamid-pass" className="field__label">
+                  TEAM ID (REQUIRED)
+                </label>
+                <input
+                  id="lookup-teamid-pass"
+                  type="text"
+                  className="field__input"
+                  placeholder="e.g. DC-001"
+                  value={teamIdInput}
+                  onChange={(e) => setTeamIdInput(e.target.value)}
+                />
+              </div>
+            )}
 
             {/* Status line */}
             <div
@@ -1257,7 +1349,32 @@ export default function StudioPage() {
             )}
           </div>
         </section>
+        </div>
       </div>
+
+      {/* Tab Panel 2: Certificates (only when switch is enabled) */}
+      {IS_CERTIFICATES_ENABLED && (
+        <div
+          id="panel-certificates"
+          role="tabpanel"
+          aria-labelledby="tab-certificates"
+          className={`studio-tabpanel ${activeTab === "certificates" ? "studio-tabpanel--active" : "studio-tabpanel--hidden"}`}
+        >
+          <CertificatesPanel
+            email={email}
+            onEmailChange={handleEmailChange}
+            status={status}
+            lookupResult={lookupResult}
+            onLookup={handleLookup}
+            teamIdInput={teamIdInput}
+            onTeamIdChange={(e) => setTeamIdInput(e.target.value)}
+            isUnlocked={isUnlocked}
+            statusMessage={statusMessage()}
+            projectName={ideaTitle}
+            onProjectNameChange={setIdeaTitle}
+          />
+        </div>
+      )}
 
       {/* Minimal Footer */}
       <footer className="studio-footer" role="contentinfo">

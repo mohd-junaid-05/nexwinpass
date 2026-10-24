@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 import { lookupLimiter } from "@/lib/rateLimit";
+import { generateCertificateId } from "@/lib/certificates/id";
 
 interface Registration {
   email: string;
@@ -13,6 +14,8 @@ interface Registration {
   members: number;
   idea?: string;
   number?: number;
+  participation?: boolean;
+  completion?: boolean;
 }
 
 let registrations: Registration[] | null = null;
@@ -26,7 +29,7 @@ async function loadRegistrations(): Promise<Registration[]> {
 }
 
 export async function POST(request: NextRequest) {
-  // Rate limit by IP
+  // Rate limit by IP (shared limit across both Pass and Certificates tabs)
   const forwarded = request.headers.get("x-forwarded-for");
   const ip = forwarded?.split(",")[0]?.trim() ?? "unknown";
 
@@ -37,7 +40,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  let body: { email?: string };
+  let body: { email?: string; teamId?: string };
   try {
     body = await request.json();
   } catch {
@@ -60,7 +63,35 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ found: false }, { status: 200 });
   }
 
-  // Never return the email
+  // Optional second check: require team ID matching if enabled
+  const requireTeamId =
+    process.env.REQUIRE_TEAM_ID === "true" ||
+    process.env.NEXT_PUBLIC_REQUIRE_TEAM_ID === "true";
+
+  if (requireTeamId) {
+    const providedTeamId =
+      typeof body.teamId === "string" ? body.teamId.trim().toUpperCase() : "";
+    const expectedTeamId = (match.teamId || "").trim().toUpperCase();
+
+    if (!providedTeamId || providedTeamId !== expectedTeamId) {
+      // Return exact same generic response as unknown email
+      return NextResponse.json({ found: false }, { status: 200 });
+    }
+  }
+
+  // Server strictly evaluates certificate eligibility
+  const isParticipationEligible = match.participation !== false;
+  const isCompletionEligible = match.completion === true;
+
+  const participationId = isParticipationEligible
+    ? generateCertificateId("participation", match)
+    : null;
+
+  const completionId = isCompletionEligible
+    ? generateCertificateId("completion", match)
+    : null;
+
+  // Never return the email, never return teammates' names
   return NextResponse.json({
     found: true,
     name: match.name,
@@ -71,5 +102,15 @@ export async function POST(request: NextRequest) {
     members: match.members,
     idea: match.idea ?? "",
     number: match.number,
+    certificates: {
+      participation: {
+        eligible: isParticipationEligible,
+        id: participationId,
+      },
+      completion: {
+        eligible: isCompletionEligible,
+        id: completionId,
+      },
+    },
   });
 }

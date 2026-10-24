@@ -234,6 +234,8 @@ export const FONTS = {
     "'Syne', 'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', system-ui, sans-serif",
   techCollector:
     "'Sora', 'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', system-ui, sans-serif",
+  certificateBrush:
+    "'Lost in South', 'LostinSouth', 'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Noto Sans Telugu', 'Noto Sans Arabic', sans-serif",
   monospace:
     "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
 } as const;

@@ -393,6 +393,95 @@
 - Deployed URL for QR code encoding (currently left blank as requested)
 - Operator choice for Devfolio team ID mapping if export omits team code
 
+---
 
+## Phase 9 — Certificates (Logic & Dummy Templates) ✅
 
+**Status:** Complete  
+**Date:** 2026-10-24
 
+### What was built
+
+| Item | File(s) | Status |
+|---|---|---|
+| Operator questions & decisions recorded | `docs/certificates-operator-decisions.md` | ✅ Done |
+| Deterministic HMAC-SHA256 certificate ID engine | `lib/certificates/id.ts` | ✅ Done |
+| Secret failure guard (fails loudly with descriptive error if missing) | `lib/certificates/id.ts`, `.env.example` | ✅ Done |
+| Server-side eligibility evaluation & shared lookup | `app/api/lookup/route.ts` | ✅ Done |
+| Optional second verification check (`REQUIRE_TEAM_ID`) | `app/api/lookup/route.ts`, `lib/certificates/config.ts` | ✅ Done |
+| Dummy registrations with deliberate awkward edge cases | `data/registrations.json` | ✅ Done |
+| Declarative certificate template definitions & support config | `lib/certificates/config.ts`, `lib/certificates/types.ts` | ✅ Done |
+| Feature switch flag hiding tab in production (`IS_CERTIFICATES_ENABLED`) | `lib/certificates/config.ts`, `app/page.tsx` | ✅ Done |
+| Watermarked dummy certificate background generator | `tools/certificates/generate_dummy_certificates.py`, `public/certificates/dummy/*.png` | ✅ Done |
+| Pure certificate canvas renderer with dynamic text fitting & script fallback | `lib/certificates/render.ts` | ✅ Done |
+| Development placement calibration overlay (stripped in production) | `lib/certificates/render.ts`, `app/components/CertificatesPanel.tsx` | ✅ Done |
+| Full-resolution PNG certificate export pipeline & safe filename sanitizer | `lib/certificates/export.ts` | ✅ Done |
+| Social media caption generator mentioning NEXWIN & Nexus Coding Club | `lib/certificates/export.ts`, `app/components/CertificatesPanel.tsx` | ✅ Done |
+| Two certificate cards (Participation & Completion) with kind ineligibility state | `app/components/CertificatesPanel.tsx` | ✅ Done |
+| Accessible two-tab navigation (Pass vs Certificates) with shared unlock | `app/page.tsx`, `app/globals.css` | ✅ Done |
+| Automated unit tests verifying ID uniqueness, stability, and fail-loud secret | `tools/test_phase09_logic.ts` | ✅ Done |
+
+### Acceptance check
+
+| # | Check | Result |
+|---|---|---|
+| 1 | The five questions put to operator and answers written in short note | ✅ Pass — documented in `docs/certificates-operator-decisions.md` |
+| 2 | Switch off hides Certificates tab and dummy routes; on shows tab | ✅ Pass — `IS_CERTIFICATES_ENABLED` guards tab render; defaults off in production |
+| 3 | Both eligible shows both cards; participation-only shows completion explanation; neither shows both; unknown shows generic message | ✅ Pass — verified with Abdul Raouf (both), Yasser Mohd Taha (part only), Shaik Aslam (neither), and unknown email |
+| 4 | Unlock in Pass tab, then open Certificates: already unlocked; editing email locks both | ✅ Pass — shared state in `app/page.tsx` synchronizes unlock and re-locks on edit |
+| 5 | Client tampering prevention (server controls eligibility and IDs) | ✅ Pass — client export blocked without server-generated ID; server is sole authority |
+| 6 | Lookup response privacy: no email, no teammates' names, no registration list leaked | ✅ Pass — response strictly scoped to recipient facts and certificate IDs |
+| 7 | Fits longest name (Carol) and Devanagari (Aarav), Telugu (Ananya), Arabic (Zaid) without overflow or collision | ✅ Pass — dynamic font shrinking down to minimum floor, line wrapping, and font fallback stack |
+| 8 | Development overlay lines up with text; stripped completely in production build | ✅ Pass — dev toggle guarded by `process.env.NODE_ENV !== "production"` |
+| 9 | Download PNG for each type; exact dimensions (1920×1080), safe sanitized filenames | ✅ Pass — `exportCertificateToBlob` renders isolated offscreen canvas with `sanitizeFilename` |
+| 10 | Same ID twice; different person gets different ID; removing secret fails loudly | ✅ Pass — verified via automated unit test in `tools/test_phase09_logic.ts` |
+| 11 | Second check (team ID): wrong value gives exact same generic message as unknown email | ✅ Pass — server returns identical `{ found: false }` status 200 on team ID mismatch |
+| 12 | Shared rate limiting across both tabs | ✅ Pass — both tabs invoke `/api/lookup` sharing the in-memory IP rate limiter |
+| 13 | Full keyboard and screen reader accessibility | ✅ Pass — proper ARIA `role="tablist"`, `role="tab"`, `role="tabpanel"`, arrow key navigation, `aria-live`, and preview `aria-label` |
+| 14 | 375px responsive mobile fit and desktop stacked cards | ✅ Pass — CSS grid stacks to 1 column below 960px with no horizontal overflow |
+| 15 | `npm run build` and `npm run lint` pass clean | ✅ Pass — production build exit code 0; ESLint 0 warnings, 0 errors |
+
+### Not verified (needs manual operator testing)
+
+- Physical screen reader auditory announcement verification across assistive device setups
+
+---
+
+## Phase 10 — Final Certificates (Real Templates & Placeholder Replacement) ✅
+
+**Status:** Complete  
+**Date:** 2026-10-24
+
+### What was built
+
+| Item | File(s) | Status |
+|---|---|---|
+| Operator decisions recorded | `docs/certificates-operator-decisions.md` | ✅ Done |
+| Real high-resolution templates (2000×1414) deployed | `public/certificates/participation.png`, `public/certificates/completion.png` | ✅ Done |
+| Declarative template configuration with pixel calibration | `lib/certificates/config.ts`, `lib/certificates/types.ts` | ✅ Done |
+| Precise background masking engine (solid + dynamic slice stretch) | `lib/certificates/render.ts`, `lib/certificates/types.ts` | ✅ Done |
+| Dynamic text rendering for Participation role badge, name, & citation | `lib/certificates/render.ts`, `lib/certificates/config.ts` | ✅ Done |
+| Dynamic text rendering for Completion name & project milestone citation | `lib/certificates/render.ts`, `lib/certificates/config.ts` | ✅ Done |
+| Interactive user project name input with live canvas preview | `app/components/CertificatesPanel.tsx`, `app/page.tsx` | ✅ Done |
+| Production feature activation (`IS_CERTIFICATES_ENABLED = true`) | `lib/certificates/config.ts` | ✅ Done |
+| Dummy assets removal (`public/certificates/dummy/*`, generator script) | `public/certificates/dummy/`, `tools/certificates/` | ✅ Done |
+| Safe PNG export at exact native 2000×1414 resolution | `lib/certificates/export.ts`, `lib/certificates/render.ts` | ✅ Done |
+| Automated unit and edge case tests (Latin, Devanagari, Telugu, Arabic) | `tools/test_phase09_logic.ts`, `scratch/test_edge_cases.ts` | ✅ Done |
+
+### Acceptance check
+
+| # | Check | Result |
+|---|---|---|
+| 1 | Operator questions answered and recorded | ✅ Pass — all 10 questions documented in `docs/certificates-operator-decisions.md` |
+| 2 | `IS_CERTIFICATES_ENABLED` is true, tab visible in production | ✅ Pass — enabled by default in production build |
+| 3 | Both real templates rendered with participant data | ✅ Pass — Participation (`2.png`) and Completion (`1.png`) rendered with participant data |
+| 4 | No literal placeholder words or `{...}` brackets visible | ✅ Pass — clean masking completely obscures raw template placeholders |
+| 5 | Static template elements remain completely untouched | ✅ Pass — logos, borders, headers, signatures, and 3D crystal trophy intact |
+| 6 | Longest names and non-Latin scripts fit cleanly | ✅ Pass — tested across Latin, Devanagari, Telugu, and Arabic without overflow |
+| 7 | Development overlay aligns in dev; absent in production | ✅ Pass — debug overlay guarded by `NODE_ENV !== "production"` |
+| 8 | Downloading certificate outputs exact 2000×1414 PNG with safe filename | ✅ Pass — exported via isolated canvas to `NEXWIN-{type}-{safeName}.png` |
+| 9 | `npm run build` and `npm run lint` pass with zero errors | ✅ Pass — Next.js 16.4.2 build and ESLint pass with code 0 |
+
+### Not verified (needs manual operator testing)
+
+- Visual check on physical mobile device display for 2000×1414 canvas scaling
