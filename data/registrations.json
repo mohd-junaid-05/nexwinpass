@@ -19,7 +19,7 @@
     "role": "Member",
     "members": 3,
     "participation": true,
-    "completion": false
+    "completion": true
   },
   {
     "email": "shaikaslam2602@gmail.com",
@@ -30,7 +30,7 @@
     "role": "Member",
     "members": 3,
     "participation": true,
-    "completion": false
+    "completion": true
   },
   {
     "email": "carol.longname@example.com",

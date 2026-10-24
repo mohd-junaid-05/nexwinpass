@@ -820,19 +820,23 @@ export default function StudioPage() {
           {/* User details */}
           <div className="field-group">
             <div className="field">
-              <label htmlFor="field-name" className="field__label">
-                YOUR NAME
-              </label>
+              <div className="field__label-row">
+                <label htmlFor="field-name" className="field__label">
+                  YOUR NAME
+                </label>
+                {isUnlocked && (
+                  <span className="field__hint">Editable if incorrect</span>
+                )}
+              </div>
               <input
                 id="field-name"
                 type="text"
-                className={`field__input${isUnlocked ? " field__input--readonly" : ""}`}
+                className="field__input"
                 value={name}
-                readOnly={isUnlocked}
+                onChange={(e) => setName(e.target.value)}
                 disabled={!isUnlocked}
-                tabIndex={isUnlocked ? -1 : 0}
-                aria-readonly={isUnlocked}
                 placeholder="Alex Morgan"
+                maxLength={60}
               />
             </div>
 
@@ -1372,6 +1376,8 @@ export default function StudioPage() {
             statusMessage={statusMessage()}
             projectName={ideaTitle}
             onProjectNameChange={setIdeaTitle}
+            name={name}
+            onNameChange={setName}
           />
         </div>
       )}

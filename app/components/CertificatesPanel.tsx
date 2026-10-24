@@ -58,6 +58,8 @@ interface CertificatesPanelProps {
   statusMessage: string;
   projectName?: string;
   onProjectNameChange?: (name: string) => void;
+  name: string;
+  onNameChange: (name: string) => void;
 }
 
 export default function CertificatesPanel({
@@ -72,6 +74,8 @@ export default function CertificatesPanel({
   statusMessage,
   projectName,
   onProjectNameChange,
+  name,
+  onNameChange,
 }: CertificatesPanelProps) {
   // Placement overlay toggle (development only)
   const [showDevOverlay, setShowDevOverlay] = useState(false);
@@ -102,7 +106,7 @@ export default function CertificatesPanel({
     (type: CertificateType): ParticipantCertificateData => {
       const certInfo = lookupResult?.certificates?.[type];
       return {
-        name: lookupResult?.name || "",
+        name: name !== undefined && name !== "" ? name : (lookupResult?.name || ""),
         team: lookupResult?.team || "",
         teamId: lookupResult?.teamId || "",
         track: lookupResult?.track ?? 0,
@@ -111,7 +115,7 @@ export default function CertificatesPanel({
         projectName: projectName !== undefined ? projectName : (lookupResult?.idea || ""),
       };
     },
-    [lookupResult, projectName]
+    [lookupResult, projectName, name]
   );
 
   // Eligibility flags (decided strictly by server)
@@ -325,6 +329,29 @@ export default function CertificatesPanel({
           >
             {statusMessage}
           </div>
+
+          {/* Editable Name Field (allows participants to fix their name on certificates) */}
+          {isUnlocked && (
+            <div className="field cert-name-field" style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid var(--border)" }}>
+              <div className="field__label-row">
+                <label htmlFor="cert-name-input" className="field__label">
+                  PARTICIPANT NAME (EDITABLE)
+                </label>
+                <span className="field__hint">
+                  Edit if spelling needs correction on certificates
+                </span>
+              </div>
+              <input
+                id="cert-name-input"
+                type="text"
+                className="field__input"
+                placeholder="Your full name"
+                value={name}
+                onChange={(e) => onNameChange(e.target.value)}
+                maxLength={60}
+              />
+            </div>
+          )}
         </form>
       </div>
 
